@@ -123,6 +123,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &110987658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 110987660}
+  - component: {fileID: 110987659}
+  m_Layer: 0
+  m_Name: Flock (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &110987659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110987658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e396793999223a4d96ba5831294359c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentPrefab: {fileID: 2153957486420380767, guid: 52051548e922c814b94bfe8ec6f952cb, type: 3}
+  agents: []
+  behavior: {fileID: 11400000, guid: b760a30a17d147643afb368c1c7049c4, type: 2}
+  startingCount: 150
+  agentDensity: 0.08
+  driveFactor: 10
+  maxSpeed: 38.4
+  neighbourRadius: 3
+  avoidanceRadiusMultiplier: 0.5
+--- !u!4 &110987660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110987658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.84, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +228,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 80
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -235,13 +287,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e396793999223a4d96ba5831294359c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agentPrefab: {fileID: 2153957486420380767, guid: 987d218ad32ad1545936b0fd112ff501, type: 3}
   agents: []
-  agentPrefab: {fileID: 0}
-  behaviour: {fileID: 0}
-  startingCount: 250
+  behavior: {fileID: 11400000, guid: c793e1f7a6cec0149a62d3cc155111ac, type: 2}
+  startingCount: 150
+  agentDensity: 0.08
   driveFactor: 10
   maxSpeed: 5
-  neighbourRadius: 1.5
+  neighbourRadius: 3
   avoidanceRadiusMultiplier: 0.5
 --- !u!4 &889465175
 Transform:
@@ -251,7 +304,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889465173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.76, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

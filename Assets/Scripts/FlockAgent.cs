@@ -6,24 +6,21 @@ using UnityEngine;
 
 public class FlockAgent : MonoBehaviour
 {
-    //Flock agentsFlock
+    Flock _agentFlock;
+    public Flock AgentFlock { get => _agentFlock; }
     private Collider2D _agentCollider;
+    public Collider2D AgentCollider { get => _agentCollider; }
 
-    public Collider2D AgentCollider
-    {
-        get { return _agentCollider; }
-    }
+    void Start() => _agentCollider = GetComponent<Collider2D>();
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialise(Flock flock)
     {
-        _agentCollider = GetComponent<Collider2D>();
+        _agentFlock = flock;
     }
 
     public void Move(Vector2 velocity)
     {
-        transform.up = velocity.normalized;
-        transform.position += (Vector3)velocity * Time.deltaTime;
+        transform.up = velocity.normalized; //rotate the AI
+        transform.position += (Vector3)velocity * Time.deltaTime; //move the AI
     }
-
 }
