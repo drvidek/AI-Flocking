@@ -9,7 +9,7 @@ public class Flock : MonoBehaviour
 
     public FlockBehaviour behavior;
 
-    [Range(10, 500)]
+    [Range(1, 500)]
     public int startingCount = 250;
     public float agentDensity = 0.08f;
 
@@ -23,19 +23,15 @@ public class Flock : MonoBehaviour
     public float avoidanceRadiusMultiplier = 0.5f;
 
 
-    float _squareMaxSpeed;
-    float _squareNeighbourRadius;
-    float _squareAvoidanceRadius;
+    float _squareMaxSpeed { get { return maxSpeed * maxSpeed; } }
+    float _squareNeighbourRadius { get { return neighbourRadius * neighbourRadius; } }
+    float _squareAvoidanceRadius { get { return _squareNeighbourRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier; } }
 
     public float SquareAvoidanceRadius { get { return _squareAvoidanceRadius; } }
 
 
     private void Start()
     {
-        _squareMaxSpeed = maxSpeed * maxSpeed;
-        _squareNeighbourRadius = neighbourRadius * neighbourRadius;
-        _squareAvoidanceRadius = _squareNeighbourRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
-
         for (int i = 0; i < startingCount; i++)
         {
             FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
@@ -60,13 +56,15 @@ public class Flock : MonoBehaviour
             //agent.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 6f);
 
             Vector2 move = behavior.CalculateMove(agent, context, this);
+            agent.spd = agent.CalculateSpeed(context, agent.spd);
+
             move *= driveFactor;
             if (move.sqrMagnitude > _squareMaxSpeed)
             {
                 move = move.normalized * maxSpeed;
             }
 
-            agent.Move(move);
+            agent.Move(move * agent.spd);
         }
     }
 

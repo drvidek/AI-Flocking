@@ -155,12 +155,12 @@ MonoBehaviour:
   agentPrefab: {fileID: 2153957486420380767, guid: 52051548e922c814b94bfe8ec6f952cb, type: 3}
   agents: []
   behavior: {fileID: 11400000, guid: b760a30a17d147643afb368c1c7049c4, type: 2}
-  startingCount: 150
+  startingCount: 30
   agentDensity: 0.08
   driveFactor: 10
   maxSpeed: 38.4
-  neighbourRadius: 3
-  avoidanceRadiusMultiplier: 0.5
+  neighbourRadius: 6.28
+  avoidanceRadiusMultiplier: 0.862
 --- !u!4 &110987660
 Transform:
   m_ObjectHideFlags: 0
@@ -290,12 +290,12 @@ MonoBehaviour:
   agentPrefab: {fileID: 2153957486420380767, guid: 987d218ad32ad1545936b0fd112ff501, type: 3}
   agents: []
   behavior: {fileID: 11400000, guid: c793e1f7a6cec0149a62d3cc155111ac, type: 2}
-  startingCount: 150
+  startingCount: 1
   agentDensity: 0.08
-  driveFactor: 10
+  driveFactor: 23.5
   maxSpeed: 5
-  neighbourRadius: 3
-  avoidanceRadiusMultiplier: 0.5
+  neighbourRadius: 3.98
+  avoidanceRadiusMultiplier: 0.657
 --- !u!4 &889465175
 Transform:
   m_ObjectHideFlags: 0

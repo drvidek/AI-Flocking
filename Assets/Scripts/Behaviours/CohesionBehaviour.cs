@@ -7,7 +7,7 @@ public class CohesionBehaviour : FilteredFlockBehaviour
 {
     public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
-        if (context.Count == 0)
+        if (context.Count == 0 || agent.panic > 0)
         {
             return Vector2.zero;
         }

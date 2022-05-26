@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2153957486420380767}
   m_Layer: 0
   m_Name: Agent Blue
-  m_TagString: Untagged
+  m_TagString: Sheep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,3 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bc8ddee86598a41af3ecccac140c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filter: {fileID: 0}
+  agentSpd: 0

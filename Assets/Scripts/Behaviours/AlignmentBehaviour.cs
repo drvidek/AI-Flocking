@@ -7,7 +7,7 @@ public class AlignmentBehaviour : FilteredFlockBehaviour
 {
     public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
-        if (context.Count == 0)
+        if (context.Count == 0 || agent.panic > 0)
         {
             return agent.transform.up;
         }
@@ -20,7 +20,8 @@ public class AlignmentBehaviour : FilteredFlockBehaviour
 
         foreach (Transform item in filteredContext)
         {
-            alignmentMove += (Vector2)item.transform.up;
+            FlockAgent _agent = item.GetComponent<FlockAgent>();
+            alignmentMove += (Vector2)item.transform.up * _agent.spd;
             count++;
         }
 

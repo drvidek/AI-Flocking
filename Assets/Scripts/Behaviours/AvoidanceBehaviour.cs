@@ -24,6 +24,12 @@ public class AvoidanceBehaviour : FilteredFlockBehaviour
             {
                 avoidanceMove += (Vector2)(agent.transform.position - item.position);
                 count++;
+
+                if (item.tag != agent.tag)
+                {
+                    agent.spd = 1f;
+                    agent.panic = 1f;
+                }
             }
         }
         if (count != 0)
