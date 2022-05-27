@@ -18,8 +18,10 @@ MonoBehaviour:
   - behaviour: {fileID: 11400000, guid: f93c4f720aed94f438d72e12e3002654, type: 2}
     weights: 1
   - behaviour: {fileID: 11400000, guid: c79218b2a1da9d649a78cc4970134f72, type: 2}
-    weights: 1
+    weights: 4
   - behaviour: {fileID: 11400000, guid: 56dbbdb8f0b44a448ba8d3843ca07c97, type: 2}
-    weights: 1
+    weights: 3
   - behaviour: {fileID: 11400000, guid: 454ac9f35e4e5a64aabd286acd564c96, type: 2}
-    weights: 1
+    weights: 0.1
+  - behaviour: {fileID: 11400000, guid: 439e73b617541c1428041ee3c90dbb55, type: 2}
+    weights: 10

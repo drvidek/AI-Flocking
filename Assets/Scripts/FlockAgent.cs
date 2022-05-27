@@ -29,7 +29,7 @@ public class FlockAgent : MonoBehaviour
         }
         else
             spd = 0;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
             spd = 1f;
     }
 
@@ -44,7 +44,7 @@ public class FlockAgent : MonoBehaviour
         foreach (Transform item in filteredContext)
         {
             FlockAgent agent = item.GetComponent<FlockAgent>();
-            if (agent.spd > currentSpd && agent.spd > 0.5f)
+            if (agent != null && agent.spd > currentSpd && agent.spd > 0.5f)
                 currentSpd = agent.spd;
         }
         return currentSpd;
@@ -52,6 +52,7 @@ public class FlockAgent : MonoBehaviour
 
     public void Move(Vector2 velocity)
     {
+        if (velocity.magnitude > 0)
         transform.up = velocity.normalized; //rotate the AI
         transform.position += (Vector3)velocity * Time.deltaTime; //move the AI
     }
