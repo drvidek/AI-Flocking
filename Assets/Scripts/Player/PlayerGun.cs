@@ -31,6 +31,6 @@ public class PlayerGun : MasterGun
         base.Update();
 
         if (Shoot())
-            Player.Shot = true;
+            Player.ShotFired = true;
     }
 }

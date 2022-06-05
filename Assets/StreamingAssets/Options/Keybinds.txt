@@ -2,3 +2,4 @@ Left:A
 Right:D
 Forward:W
 Shoot:Space
+Boost:E

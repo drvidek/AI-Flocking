@@ -49,13 +49,13 @@ public class WanderBehavior : FilteredFlockBehaviour
 
     private void FindPath(FlockAgent agent, List<Transform> context)
     {
-        List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent, context);
+        //List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent, context);
 
-        if (filteredContext.Count == 0)
-            return;
+        //if (filteredContext.Count == 0)
+        //    return;
 
-        int randomPath = Random.Range(0, filteredContext.Count);
-        _path = filteredContext[randomPath].GetComponentInParent<WaypointPath>();
+        //int randomPath = Random.Range(0, filteredContext.Count);
+        _path = GameObject.Find("Waypoints").GetComponent<WaypointPath>(); //filteredContext[randomPath].GetComponentInParent<WaypointPath>();
     }
 
 }

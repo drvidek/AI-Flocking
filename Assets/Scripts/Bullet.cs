@@ -6,13 +6,17 @@ public class Bullet : MonoBehaviour
 {
     public Vector3 direction;
     public float spd;
-    public float power;
     public float scale;
-    Transform _player;
+    public float power;
+    SpriteRenderer _myRenderer;
+
 
     virtual protected void Start()
     {
-        _player = GameObject.Find("Player").transform;
+        transform.localScale = new Vector3(scale, scale, 1);
+        _myRenderer = GetComponent<SpriteRenderer>();
+
+        _myRenderer.color = tag == "Player" ? Color.white : Color.red;
     }
 
     protected void Update()
@@ -20,10 +24,9 @@ public class Bullet : MonoBehaviour
         if (!GameManager.IsPaused())
         {
             Move();
-            if (Vector3.Distance(transform.position, _player.position) > 100f)
-            {
+
+            if (Vector2.Distance(transform.position, Vector2.zero) > 200f)
                 StartCoroutine(EndOfLife());
-            }
         }
     }
 
@@ -33,17 +36,17 @@ public class Bullet : MonoBehaviour
 
         float _dist = Vector3.Distance(transform.position, _dest);
 
-        RaycastHit2D _rayHit;
+        RaycastHit2D[] _rayHit = Physics2D.CircleCastAll(transform.position, scale, direction, _dist);
 
-        if (_rayHit = Physics2D.CircleCast(transform.position, scale, direction, _dist))
+        if (_rayHit.Length > 0)
         {
-            Debug.Log("Raycast hit");
-
-            if (Collision(_rayHit.collider))
+            foreach (RaycastHit2D item in _rayHit)
             {
-                Debug.Log("Checked Collision");
-
-                _dest = _rayHit.point;
+                if (Collision(item.collider))
+                {
+                    _dest = item.point;
+                    continue;
+                }
             }
         }
 
@@ -52,38 +55,23 @@ public class Bullet : MonoBehaviour
 
     virtual protected bool Collision(Collider2D _hit)
     {
-        Debug.Log("Start collision check");
         if (_hit.tag != tag)
         {
-            Debug.Log("Hit something valid");
             CombatAgent _hitAgent = _hit.GetComponent<CombatAgent>();
             if (_hitAgent != null)
             {
-                Debug.Log("Hit agent");
                 _hitAgent.TakeDamage(power);
             }
-            StartCoroutine(EndOfLife());
+                StartCoroutine(EndOfLife());
             return true;
         }
         else
             return false;
     }
 
-    protected IEnumerator EndOfLife()
+    public IEnumerator EndOfLife()
     {
-
-        //direction = Vector3.zero;
-        //spd = 0;
-        //float _newScale = 1f;
-        //float _timer = _trail != null ? _trail.time * 2f : 0;
-
-        //while (_newScale > 0 && _timer > 0)
-        //{
-        //    _newScale = MathExt.Approach(_newScale, 0, Time.deltaTime / (_trail.time * 2f));
-        //    transform.localScale = new Vector3(scale * _newScale, scale * _newScale, scale * _newScale);
-        //    yield return null;
-        //}
-        Object.Destroy(this.gameObject);
+        Destroy(this.gameObject);
         yield return null;
     }
 }

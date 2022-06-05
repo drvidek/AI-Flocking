@@ -15,7 +15,7 @@ public abstract class CombatAgent : MonoBehaviour
     virtual protected void Start()
     {
         _health = _healthMax;
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _homeCol = _spriteRenderer.color;
     }
 

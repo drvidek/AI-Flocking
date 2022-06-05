@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Follow Player
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  _centre: {x: -57.914845, y: -50.61367}
-  _radius: 25
+  _centre: {x: 11.091837, y: 14.624239}
+  _radius: 30

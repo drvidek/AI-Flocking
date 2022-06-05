@@ -1377,12 +1377,12 @@ GameObject:
   - component: {fileID: 241872151}
   - component: {fileID: 241872150}
   m_Layer: 5
-  m_Name: Jump
+  m_Name: Boost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &241872149
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1400,7 +1400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 128.61505, y: -318.29526}
+  m_AnchoredPosition: {x: 128.61505, y: -298.5}
   m_SizeDelta: {x: 257.2301, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &241872150
@@ -1436,7 +1436,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Jump:
+  m_Text: 'Boost:
 
 '
 --- !u!222 &241872151
@@ -2493,7 +2493,7 @@ GameObject:
   - component: {fileID: 566667091}
   - component: {fileID: 566667090}
   m_Layer: 5
-  m_Name: Left
+  m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3005,7 +3005,7 @@ GameObject:
   - component: {fileID: 619519464}
   - component: {fileID: 619519463}
   m_Layer: 5
-  m_Name: Jump
+  m_Name: Boost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3991,7 +3991,7 @@ GameObject:
   - component: {fileID: 709719665}
   - component: {fileID: 709719664}
   m_Layer: 5
-  m_Name: Forward
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4496,6 +4496,10 @@ MonoBehaviour:
     keyDisplayText: {fileID: 1079337137}
     defaultKey: space
     buttonObject: {fileID: 1052190983}
+  - keyName: Boost
+    keyDisplayText: {fileID: 335219911}
+    defaultKey: E
+    buttonObject: {fileID: 619519461}
   currentKeyButton: {fileID: 0}
   changedKeyCol:
     serializedVersion: 2
@@ -5222,7 +5226,7 @@ GameObject:
   - component: {fileID: 1052190986}
   - component: {fileID: 1052190985}
   m_Layer: 5
-  m_Name: Right
+  m_Name: Shoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6372,7 +6376,7 @@ GameObject:
   - component: {fileID: 1363278202}
   - component: {fileID: 1363278201}
   m_Layer: 5
-  m_Name: Backwards
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7891,7 +7895,7 @@ GameObject:
   - component: {fileID: 1629071268}
   - component: {fileID: 1629071267}
   m_Layer: 5
-  m_Name: Thruster
+  m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10039,7 +10043,7 @@ GameObject:
   - component: {fileID: 2030874339}
   - component: {fileID: 2030874338}
   m_Layer: 5
-  m_Name: Options
+  m_Name: Options Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

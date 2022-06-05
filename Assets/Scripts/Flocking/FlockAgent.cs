@@ -4,13 +4,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 
-public class FlockAgent : MasterEnemy
+public class FlockAgent : CombatAgent
 {
     Flock _agentFlock;
     public Flock AgentFlock { get => _agentFlock; }
     private Collider2D _agentCollider;
     public ContextFilter filter;
     public Collider2D AgentCollider { get => _agentCollider; }
+    public GameObject _deathPart;
 
     new void Start()
     {
@@ -33,6 +34,12 @@ public class FlockAgent : MasterEnemy
     protected override void EndOfLife()
     {
         _agentFlock.agents.Remove(this);
+        GameObject _partOb = Instantiate(_deathPart);
+        _partOb.transform.position = transform.position;
+        ParticleSystem _partSys = _partOb.GetComponent<ParticleSystem>();
+        var _main = _partSys.main;
+        _main.startColor = new Color(_homeCol.r,_homeCol.g, _homeCol.b);
+
         Destroy(this.gameObject);
     }
 }

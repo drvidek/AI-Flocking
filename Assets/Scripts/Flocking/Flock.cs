@@ -53,28 +53,31 @@ public class Flock : MonoBehaviour
 
     private void Update()
     {
-        if (agents.Count == 0)
+        if (!GameManager.IsPaused())
         {
-            spawnCount = (int)Mathf.Round((float)spawnCount * 1.5f);
-            SpawnAgents(spawnCount);
-        }
-            else
-        foreach (FlockAgent agent in agents)
-        {
-            List<Transform> context = GetNearbyObjects(agent);
-
-            //FOR TESING
-            //agent.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 6f);
-
-            Vector2 move = behavior.CalculateMove(agent, context, this);
-
-            move *= driveFactor;
-            if (move.sqrMagnitude > _squareMaxSpeed)
+            if (agents.Count == 0)
             {
-                move = move.normalized * maxSpeed;
+                spawnCount = (int)Mathf.Round((float)spawnCount * 1.5f);
+                SpawnAgents(spawnCount);
             }
+            else
+                foreach (FlockAgent agent in agents)
+                {
+                    List<Transform> context = GetNearbyObjects(agent);
 
-            agent.Move(move);
+                    //FOR TESING
+                    //agent.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 6f);
+
+                    Vector2 move = behavior.CalculateMove(agent, context, this);
+
+                    move *= driveFactor;
+                    if (move.sqrMagnitude > _squareMaxSpeed)
+                    {
+                        move = move.normalized * maxSpeed;
+                    }
+
+                    agent.Move(move);
+                }
         }
     }
 
@@ -82,7 +85,7 @@ public class Flock : MonoBehaviour
     private List<Transform> GetNearbyObjects(FlockAgent agent)
     {
         List<Transform> context = new List<Transform>();
-        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius);
+        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius * agent.transform.lossyScale.x);
         foreach (Collider2D c in contextColliders)
         {
             if (c != agent.AgentCollider)
