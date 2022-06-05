@@ -12,7 +12,7 @@ public class NonFlockFilter : ContextFilter
         foreach (Transform item in original)
         {
             FlockAgent itemAgent = item.GetComponent<FlockAgent>();
-            if (itemAgent == null)
+            if (itemAgent == null && item.tag != agent.tag)
             {
                 filtered.Add(item);
             }

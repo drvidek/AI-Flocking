@@ -22,6 +22,7 @@ public class Flock : MonoBehaviour
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
 
+    public List<Transform> spawnPoints;
 
     float _squareMaxSpeed { get { return maxSpeed * maxSpeed; } }
     float _squareNeighbourRadius { get { return neighbourRadius * neighbourRadius; } }
@@ -37,11 +38,13 @@ public class Flock : MonoBehaviour
 
     void SpawnAgents(int count)
     {
+        int spawnIndex = Random.Range(0, spawnPoints.Count);
+        Transform _spawnpoint = spawnPoints[spawnIndex];
         for (int i = 0; i < count; i++)
         {
             FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
                 agentPrefab, // this is the prefab
-                Random.insideUnitCircle * spawnCount * agentDensity,
+                _spawnpoint.position + (Vector3)(Random.insideUnitCircle * spawnCount * agentDensity),
                 Quaternion.Euler(Vector3.forward * Random.Range(0, 360f)),
                 transform
                 );

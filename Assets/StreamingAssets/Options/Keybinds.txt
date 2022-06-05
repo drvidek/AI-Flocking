@@ -2,4 +2,5 @@ Left:A
 Right:D
 Forward:W
 Shoot:Space
-Boost:E
+Boost:LeftShift
+Pause:P

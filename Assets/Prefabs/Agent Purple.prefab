@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5277045171431250968}
   - component: {fileID: 2153957486420380767}
   m_Layer: 0
-  m_Name: Agent Red
+  m_Name: Agent Purple
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e363fb623a5ca094d96d31b917475a54, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.11678028, a: 1}
+  m_Color: {r: 0.35498065, g: 0.22116414, b: 0.6603774, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

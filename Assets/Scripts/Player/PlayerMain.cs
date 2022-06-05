@@ -11,11 +11,14 @@ public class PlayerMain : CombatAgent
     public bool ShotFired { set { _shotFired = value; } }
     [SerializeField] private Vector2 _myVelocity;
 
+
     float _boostDelay;
     [SerializeField] private float _boostDelayMax = 3f, _boostRate = 1.3f, _boostDuration = 0.5f;
     bool _boostActive;
     [SerializeField] private GameObject _boostField;
     [SerializeField] private Image _boostImage;
+    [SerializeField] private ParticleSystem _pingPartSys;
+    [SerializeField] private ParticleSystem _thrustPartSys;
 
     new void Start()
     {
@@ -62,6 +65,8 @@ public class PlayerMain : CombatAgent
                 _myVelocity.x = MathExt.Approach(_myVelocity.x, 0, _fric * Time.deltaTime);
                 _myVelocity.y = MathExt.Approach(_myVelocity.y, 0, _fric * Time.deltaTime);
             }
+
+            ScreenWrap();
         }
     }
 
@@ -96,12 +101,17 @@ public class PlayerMain : CombatAgent
         {
             _spdAccelCurrent += _spdAccel * Time.deltaTime;
             _spdCurrent = MathExt.Approach(_spdCurrent, _spdMax, _spdAccelCurrent * Time.deltaTime);
+            if (_thrustPartSys.isStopped)
+                _thrustPartSys.Play();
             return (Vector2)transform.up * _spdCurrent * Time.deltaTime;
+            
         }
         else
         {
             _spdCurrent = 0f;
             _spdAccelCurrent = 0f;
+            if (_thrustPartSys.isPlaying)
+                _thrustPartSys.Stop();
             return Vector2.zero;
         }
     }
@@ -120,20 +130,17 @@ public class PlayerMain : CombatAgent
     void Move(Vector3 velocity)
     {
         Vector3 _dest = transform.position + velocity;
-
-        //float _dist = Vector3.Distance(transform.position, _dest);
-
-        //RaycastHit2D _rayHit;
-
-        //if (_rayHit = Physics2D.Cast(transform.position, _myCollider.radius, velocity.normalized, _dist))
-        //{
-        //    if (_rayHit.collider.tag == "Block")
-        //    {
-        //        _dest = transform.position;
-        //    }
-        //}
-
         transform.position = _dest;
+    }
+
+    protected override void ScreenWrap()
+    {
+        base.ScreenWrap();
+
+        if (isWrappingX || isWrappingY)
+        {
+            _pingPartSys.Play();
+        }
     }
 
     protected override void EndOfLife()
