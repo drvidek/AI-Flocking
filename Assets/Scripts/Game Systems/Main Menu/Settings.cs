@@ -9,32 +9,6 @@ public class Settings : MonoBehaviour
 {
     private static bool firstBootDone;
 
-    private void Start()
-    {
-        #region Resolution
-        resolutions = Screen.resolutions;
-        resDropdown.ClearOptions();
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
-        }
-        resDropdown.AddOptions(options);
-        resDropdown.value = currentResolutionIndex;
-        resDropdown.RefreshShownValue();
-        #endregion
-
-        //read the settings file, apply the settings to the screen, and apply the settings to the game on first boot
-        ReadSettings(!firstBootDone);
-
-        firstBootDone = true;
-    }
 
     #region Saving and Loading
     static string path = Path.Combine(Application.streamingAssetsPath, "Options/Settings.txt");
@@ -45,76 +19,12 @@ public class Settings : MonoBehaviour
 
     public void SaveSettings()
     {
-        StreamWriter saveWrite = new StreamWriter(path, false);
-
-        for (int i = 0; i < sliders.Length; i++)
-        {
-            saveWrite.WriteLine(sliders[i].value);
-        }
-
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            saveWrite.WriteLine(toggles[i].isOn);
-        }
-
-        for (int i = 0; i < dropdowns.Length; i++)
-        {
-            saveWrite.WriteLine(dropdowns[i].value);
-        }
-
-        saveWrite.Close();
+        HandleSettingsFile.WriteSaveFile(this);
     }
 
     public void ReadSettings(bool apply)
     {
-        StreamReader saveRead = new StreamReader(path);
-
-        for (int i = 0; i < sliders.Length; i++)
-        {
-            sliders[i].value = float.Parse(saveRead.ReadLine());
-            if (apply)
-            {
-                string thisSlider = sliders[i].name;
-                CurrentSlider(thisSlider);
-                ChangeVolume(sliders[i].value);
-            }
-        }
-
-        for (int i = 0; i < toggles.Length; i++)
-        {
-            bool muted = bool.Parse(saveRead.ReadLine());
-            toggles[i].isOn = muted;
-            if (i < sliders.Length)
-            {
-                sliders[i].interactable = !muted;
-                if (apply && muted)
-                {
-                    string thisSlider = sliders[i].name;
-                    CurrentSlider(thisSlider);
-                    ChangeVolume(-80f);
-                }
-            }
-            else
-            {
-                if (apply)
-                Screen.fullScreen = muted;
-            }
-
-        }
-
-        for (int i = 0; i < dropdowns.Length; i++)
-        {
-            dropdowns[i].value = int.Parse(saveRead.ReadLine());
-            if (apply)
-            {
-                if (i == 0)
-                    Quality(dropdowns[i].value);
-                else
-                    SetResolution(dropdowns[i].value);
-            }
-        }
-
-        saveRead.Close();
+        HandleSettingsFile.ReadSaveFile(this, apply);
     }
     #endregion
 
@@ -169,15 +79,13 @@ public class Settings : MonoBehaviour
     #endregion
 
     #region Resolution
-    public Resolution[] resolutions;
+    public List<Resolution> resolutions = new List<Resolution>();
     public Dropdown resDropdown;
 
     public void FullscreenToggle(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
     }
-
-
 
     public void SetResolution(int index)
     {
@@ -186,4 +94,42 @@ public class Settings : MonoBehaviour
     }
 
     #endregion
+    private void Start()
+    {
+        #region Resolution
+        resolutions = new List<Resolution>(Screen.resolutions);
+        resDropdown.ClearOptions();
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
+        for (int i = 0; i < resolutions.Count; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+
+            Vector2 _currentRes = new Vector2(resolutions[i].width, resolutions[i].height);
+            Vector2 _targetRes = new Vector2(16, 9);
+
+            if (!options.Contains(option) && (_currentRes.normalized == _targetRes.normalized))
+            {
+                options.Add(option);
+                if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+                {
+                    currentResolutionIndex = i;
+                }
+            }
+            else
+            {
+                resolutions.RemoveAt(i);
+                i--;
+            }
+        }
+        resDropdown.AddOptions(options);
+        resDropdown.value = currentResolutionIndex;
+        resDropdown.RefreshShownValue();
+        #endregion
+
+        //read the settings file, apply the settings to the screen, and apply the settings to the game on first boot
+        ReadSettings(!firstBootDone);
+
+        firstBootDone = true;
+    }
 }

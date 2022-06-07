@@ -7,7 +7,7 @@ public static class HandleKeybindFile
 {
     static string path = Path.Combine(Application.streamingAssetsPath, "Options/Keybinds.txt");
 
-        [MenuItem("My Tools/Save/Write File/Keybinds")]
+    //     [MenuItem("My Tools/Save/Write File/Keybinds")]
     public static void WriteSaveFile()
     {
         StreamWriter saveWrite = new StreamWriter(path, false);
@@ -20,7 +20,7 @@ public static class HandleKeybindFile
         saveWrite.Close();
     }
 
-        [MenuItem("My Tools/Save/Read File/Keybinds")]
+    //     [MenuItem("My Tools/Save/Read File/Keybinds")]
     public static void ReadSaveFile()
     {
         StreamReader saveRead = new StreamReader(path);
