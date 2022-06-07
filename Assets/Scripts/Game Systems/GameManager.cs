@@ -47,6 +47,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
     }
 
+    public void SaveGame()
+    {
+        PlayerSave.WriteSaveFile(GameObject.Find("Player").transform);
+    }
+
+    public void LoadGame(int file)
+    {
+        PlayerSave.ReadSaveFile(GameObject.Find("Player").transform,file);
+    }
+
     public void QuitGame()
     {
         Application.Quit();
