@@ -1007,7 +1007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 254, y: -50}
+  m_AnchoredPosition: {x: 203, y: -47}
   m_SizeDelta: {x: 195, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2402353641195642885
@@ -1057,8 +1057,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: GetSlider
         m_Mode: 2
         m_Arguments:
@@ -1069,8 +1069,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentSlider
         m_Mode: 5
         m_Arguments:
@@ -1081,8 +1081,8 @@ MonoBehaviour:
           m_StringArgument: sfxVolume
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: MuteToggle
         m_Mode: 0
         m_Arguments:
@@ -1431,8 +1431,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: Quality
         m_Mode: 0
         m_Arguments:
@@ -2119,10 +2119,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2402353642157037961}
+      - m_Target: {fileID: 5924670829154089980}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: SaveSettings
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2489,7 +2501,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2402353641443367108}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2497,7 +2509,7 @@ RectTransform:
   - {fileID: 2402353642456233718}
   - {fileID: 2402353641859641383}
   - {fileID: 2402353641318585757}
-  m_Father: {fileID: 2402353642157037960}
+  m_Father: {fileID: 3550969244338952583}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2829,7 +2841,7 @@ GameObject:
   - component: {fileID: 2402353641548604035}
   - component: {fileID: 2402353641548604032}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: masterVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2908,8 +2920,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentSlider
         m_Mode: 5
         m_Arguments:
@@ -2920,8 +2932,8 @@ MonoBehaviour:
           m_StringArgument: masterVolume
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 0
         m_Arguments:
@@ -3951,7 +3963,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 0.390822}
-  m_AnchoredPosition: {x: 0, y: -1.8900299}
+  m_AnchoredPosition: {x: 0, y: -1.8900146}
   m_SizeDelta: {x: 0, y: -3.899994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2402353641870362803
@@ -5328,8 +5340,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2402353642157037960}
   - component: {fileID: 2402353642157037962}
-  - component: {fileID: 2402353642157037963}
   - component: {fileID: 8361044805251917349}
+  - component: {fileID: 316120763275046235}
   m_Layer: 5
   m_Name: Options Screen
   m_TagString: Untagged
@@ -5348,8 +5360,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2402353642402153745}
-  - {fileID: 2402353641443367111}
+  - {fileID: 3550969244338952583}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5366,36 +5377,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2402353642157037961}
   m_CullTransparentMesh: 1
---- !u!114 &2402353642157037963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2402353642157037961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &8361044805251917349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5423,7 +5404,7 @@ MonoBehaviour:
     buttonObject: {fileID: 2402353641213710393}
   - keyName: Shoot
     keyDisplayText: {fileID: 2402353642817132504}
-    defaultKey: space
+    defaultKey: Space
     buttonObject: {fileID: 2402353641158172270}
   - keyName: Boost
     keyDisplayText: {fileID: 2402353641514433454}
@@ -5434,12 +5415,46 @@ MonoBehaviour:
     defaultKey: P
     buttonObject: {fileID: 2402353641163565374}
   currentKeyButton: {fileID: 0}
+  currentKeyCol:
+    serializedVersion: 2
+    rgba: 0
   changedKeyCol:
     serializedVersion: 2
     rgba: 4294552359
   selectedKeyCol:
     serializedVersion: 2
     rgba: 4280579311
+  cWhite:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!114 &316120763275046235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2402353642157037961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a13ac5cd285db7a4b8c6862a987d426d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliders:
+  - {fileID: 2402353641548604032}
+  - {fileID: 2402353642701825888}
+  - {fileID: 2402353642379683503}
+  toggles:
+  - {fileID: 2402353642255958814}
+  - {fileID: 2402353642565187181}
+  - {fileID: 2402353641195642885}
+  - {fileID: 2402353642707444160}
+  dropdowns:
+  - {fileID: 2402353641224166768}
+  - {fileID: 2402353641307289753}
+  masterAudio: {fileID: 24100000, guid: 7de761b6c0988374983cd49dac9a50ad, type: 2}
+  currentSlider: 
+  tempSlider: {fileID: 0}
+  resDropdown: {fileID: 2402353641307289753}
 --- !u!1 &2402353642167290512
 GameObject:
   m_ObjectHideFlags: 0
@@ -5917,7 +5932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 254, y: -50}
+  m_AnchoredPosition: {x: 203, y: -47}
   m_SizeDelta: {x: 195, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2402353642255958814
@@ -5967,8 +5982,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: GetSlider
         m_Mode: 2
         m_Arguments:
@@ -5979,8 +5994,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentSlider
         m_Mode: 5
         m_Arguments:
@@ -5991,8 +6006,8 @@ MonoBehaviour:
           m_StringArgument: masterVolume
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: MuteToggle
         m_Mode: 0
         m_Arguments:
@@ -6245,7 +6260,7 @@ GameObject:
   - component: {fileID: 2402353642379683502}
   - component: {fileID: 2402353642379683503}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: sfxVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6324,8 +6339,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentSlider
         m_Mode: 5
         m_Arguments:
@@ -6336,8 +6351,8 @@ MonoBehaviour:
           m_StringArgument: sfxVolume
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 0
         m_Arguments:
@@ -6413,7 +6428,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 270}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2402353642157037960}
+  m_Father: {fileID: 3550969244338952583}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
@@ -6984,7 +6999,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 254, y: -50}
+  m_AnchoredPosition: {x: 203, y: -47}
   m_SizeDelta: {x: 195, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2402353642565187181
@@ -7034,8 +7049,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: GetSlider
         m_Mode: 2
         m_Arguments:
@@ -7046,8 +7061,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentSlider
         m_Mode: 5
         m_Arguments:
@@ -7058,8 +7073,8 @@ MonoBehaviour:
           m_StringArgument: musicVolume
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: MuteToggle
         m_Mode: 0
         m_Arguments:
@@ -7557,7 +7572,7 @@ GameObject:
   - component: {fileID: 2402353642701825891}
   - component: {fileID: 2402353642701825888}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: musicVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7582,7 +7597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: -55}
+  m_AnchoredPosition: {x: -204.99997, y: -55}
   m_SizeDelta: {x: 550, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2402353642701825888
@@ -7636,8 +7651,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentSlider
         m_Mode: 5
         m_Arguments:
@@ -7648,8 +7663,8 @@ MonoBehaviour:
           m_StringArgument: musicVolume
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 0
         m_Arguments:
@@ -7745,8 +7760,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 316120763275046235}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: FullscreenToggle
         m_Mode: 0
         m_Arguments:
@@ -7826,10 +7841,10 @@ RectTransform:
   m_Father: {fileID: 2402353641443367111}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -463, y: 65}
-  m_SizeDelta: {x: 672.38, y: 692.8687}
+  m_AnchorMin: {x: 0.051479526, y: 0.10486615}
+  m_AnchorMax: {x: 0.47473976, y: 1}
+  m_AnchoredPosition: {x: 0.19000244, y: 1.0656128}
+  m_SizeDelta: {x: 0.38000488, y: -2.1312866}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2402353642782305969
 GameObject:
@@ -8865,3 +8880,80 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Resolution
+--- !u!1 &5924670829154089980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3550969244338952583}
+  - component: {fileID: 6251845518244893599}
+  - component: {fileID: 345980270419246854}
+  m_Layer: 5
+  m_Name: OptionsVisible
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3550969244338952583
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924670829154089980}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2402353642402153745}
+  - {fileID: 2402353641443367111}
+  m_Father: {fileID: 2402353642157037960}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6251845518244893599
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924670829154089980}
+  m_CullTransparentMesh: 1
+--- !u!114 &345980270419246854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924670829154089980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

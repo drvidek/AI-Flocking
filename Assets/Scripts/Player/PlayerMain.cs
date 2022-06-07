@@ -10,6 +10,7 @@ public class PlayerMain : CombatAgent
     Collider2D _myCollider;
     public bool ShotFired { set { _shotFired = value; } }
     [SerializeField] private Vector2 _myVelocity;
+    public Vector2 Velocity { get { return _myVelocity; } }
 
 
     float _boostDelay;

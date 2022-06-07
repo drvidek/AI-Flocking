@@ -1,0 +1,9 @@
+-3.812389
+-14.87797
+0
+False
+False
+False
+True
+3
+22

@@ -15,6 +15,8 @@ public abstract class CombatAgent : MonoBehaviour
     protected bool isWrappingX = false;
     protected bool isWrappingY = false;
 
+    public bool IsWrapping { get { return (isWrappingX || isWrappingY); } }
+
     virtual protected void Start()
     {
         _health = _healthMax;

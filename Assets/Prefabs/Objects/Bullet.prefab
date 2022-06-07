@@ -101,6 +101,7 @@ MonoBehaviour:
   spd: 0
   scale: 0
   power: 0
+  _deathPart: {fileID: 1749924261501227558, guid: 82ac24b43cb9ba44bb308860f6382695, type: 3}
 --- !u!58 &-805257923755270936
 CircleCollider2D:
   m_ObjectHideFlags: 0

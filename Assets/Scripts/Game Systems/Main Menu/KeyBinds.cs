@@ -17,8 +17,10 @@ public class KeyBinds : MonoBehaviour
 
     public KeyUISetup[] baseSetup;
     public GameObject currentKeyButton;
+    public Color32 currentKeyCol;
     public Color32 changedKeyCol = new Color32(39, 171, 249, 255);
     public Color32 selectedKeyCol = new Color32(239, 116, 36, 255);
+    public Color32 cWhite = new Color32(255, 255, 255, 255);
 
     // Start is called before the first frame update
     void Start()
@@ -59,10 +61,20 @@ public class KeyBinds : MonoBehaviour
 
     public void ChangeKey(GameObject clickedKey)
     {
+        if (currentKeyButton != null)
+        {
+            //restore the colour of the button
+            currentKeyButton.GetComponent<Image>().color = currentKeyCol;
+            //forget the object we were editing
+            currentKeyButton = null;
+        }
+        
         currentKeyButton = clickedKey;
         //if we have a key selected
         if (clickedKey != null)
         {
+            //store the old color of the new button
+            currentKeyCol = clickedKey.GetComponent<Image>().color;
             //change the colour of the button to the "select a key" colour
             clickedKey.GetComponent<Image>().color = selectedKeyCol;
         }
@@ -77,7 +89,6 @@ public class KeyBinds : MonoBehaviour
         Event e = Event.current;
         if (currentKeyButton != null)
         {
-
             //if the event is a keypress
             if (e.isKey)
             {
@@ -95,18 +106,20 @@ public class KeyBinds : MonoBehaviour
             {
                 newKey = "RightShift";
             }
-            if (e.isMouse)
-            {
-                newKey = e.button.ToString();
-            }
+            //if (e.isMouse)
+            //{
+            //    newKey = e.button.ToString();
+            //}
 
             //if we have pressed a new key
             if (newKey != "")
             {
-
+                int index = -1;
                 for (int i = 0; i < baseSetup.Length; i++)
                 {
-                    string keyString = PlayerPrefs.GetString(baseSetup[i].keyName, baseSetup[i].defaultKey);
+                    if (baseSetup[i].buttonObject == currentKeyButton)
+                        index = i;
+                    string keyString = keys[baseSetup[i].buttonObject.name].ToString();
 
                     if (keyString == newKey && baseSetup[i].buttonObject != currentKeyButton)
                     {
@@ -115,8 +128,7 @@ public class KeyBinds : MonoBehaviour
                         //change display text to match the new key
                         baseSetup[i].buttonObject.GetComponentInChildren<Text>().text = currentKeyButton.GetComponentInChildren<Text>().text;
                         //change the colour of the button to blue
-                        baseSetup[i].buttonObject.GetComponent<Image>().color = changedKeyCol;
-                        break;
+                        baseSetup[i].buttonObject.GetComponent<Image>().color = (keys[currentKeyButton.name] == (KeyCode)System.Enum.Parse(typeof(KeyCode), baseSetup[i].defaultKey)) ? cWhite : changedKeyCol;
                     }
 
                 }
@@ -126,12 +138,10 @@ public class KeyBinds : MonoBehaviour
                 //change display text to match the new key
                 currentKeyButton.GetComponentInChildren<Text>().text = newKey;
                 //change the colour of the button to blue
-                currentKeyButton.GetComponent<Image>().color = changedKeyCol;
+                currentKeyButton.GetComponent<Image>().color = (keys[currentKeyButton.name] == (KeyCode)System.Enum.Parse(typeof(KeyCode), baseSetup[index].defaultKey)) ? cWhite : changedKeyCol;
                 //forget the object we were editing
                 currentKeyButton = null;
             }
-            //SaveKeys();
-
         }
     }
 

@@ -3,4 +3,4 @@ Right:D
 Forward:W
 Shoot:Space
 Boost:LeftShift
-Pause:P
+Pause:Escape

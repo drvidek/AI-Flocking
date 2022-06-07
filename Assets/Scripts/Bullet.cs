@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     public float scale;
     public float power;
     SpriteRenderer _myRenderer;
+    [SerializeField] private GameObject _deathPart;
     ParticleSystem _trailPartSys;
 
 
@@ -97,6 +98,15 @@ public class Bullet : MonoBehaviour
 
     public IEnumerator EndOfLife()
     {
+        if (tag != "Player")
+        {
+            GameObject _partOb = Instantiate(_deathPart);
+            _partOb.transform.position = transform.position;
+            ParticleSystem _partSys = _partOb.GetComponent<ParticleSystem>();
+            var _main = _partSys.main;
+            _main.startColor = _myRenderer.color;
+        }
+
         Destroy(this.gameObject);
         yield return null;
     }

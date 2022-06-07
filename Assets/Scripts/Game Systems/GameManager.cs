@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]  public enum GameState { pregame, game, pause, postgame}
 public class GameManager : MonoBehaviour
@@ -39,5 +40,19 @@ public class GameManager : MonoBehaviour
     {
         return currentGameState == GameState.pause;
     }
-    
+
+    public void ChangeScene(int sceneIndex)
+    {
+        
+        SceneManager.LoadScene(sceneIndex);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
 }
