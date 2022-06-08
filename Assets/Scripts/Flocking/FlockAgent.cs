@@ -11,7 +11,6 @@ public class FlockAgent : CombatAgent
     private Collider2D _agentCollider;
     public ContextFilter filter;
     public Collider2D AgentCollider { get => _agentCollider; }
-    public GameObject _deathPart;
 
     private List<Vector2> _pointDir = new List<Vector2>();
 
@@ -43,15 +42,13 @@ public class FlockAgent : CombatAgent
         ScreenWrap();
     }
 
-    protected override void EndOfLife()
+    protected override IEnumerator EndOfLife()
     {
         _agentFlock.agents.Remove(this);
-        GameObject _partOb = Instantiate(_deathPart);
-        _partOb.transform.position = transform.position;
-        ParticleSystem _partSys = _partOb.GetComponent<ParticleSystem>();
-        var _main = _partSys.main;
-        _main.startColor = _homeCol;
+
+        CreateDeathParticles();
 
         Destroy(this.gameObject);
+        yield return null;
     }
 }

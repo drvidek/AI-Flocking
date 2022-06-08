@@ -53,6 +53,14 @@ public class PlayerMain : CombatAgent
                 _boostImage.fillAmount = _boostDelay == 0 ? 0 : 1 - _boostDelay / _boostDelayMax;
             }
 
+            if (_dead)
+            {
+                _myVelocity = Vector2.zero;
+                _spriteRenderer.enabled = false;
+                _myCollider.enabled = false;
+                _boostImage.fillAmount = 0;
+            }
+
             Move((Vector3)_myVelocity * Time.deltaTime);
 
             if (!_boostActive)
@@ -105,7 +113,7 @@ public class PlayerMain : CombatAgent
             if (_thrustPartSys.isStopped)
                 _thrustPartSys.Play();
             return (Vector2)transform.up * _spdCurrent * Time.deltaTime;
-            
+
         }
         else
         {
@@ -131,6 +139,28 @@ public class PlayerMain : CombatAgent
     void Move(Vector3 velocity)
     {
         Vector3 _dest = transform.position + velocity;
+
+        if (!_boostActive && !_dead)
+        {
+            RaycastHit2D[] _rayHits = Physics2D.RaycastAll(transform.position, velocity, Vector3.Distance(transform.position, _dest));
+            if (_rayHits.Length > 0)
+            {
+                bool hit = false;
+                foreach (RaycastHit2D rayHit in _rayHits)
+                {
+                    if (rayHit.collider.tag != this.tag)
+                    {
+                        hit = true;
+                        Debug.Log(rayHit.collider.name);
+                        break;
+                    }
+                }
+                if (hit)
+                {
+                    StartCoroutine(EndOfLife());
+                }
+            }
+        }
         transform.position = _dest;
     }
 
@@ -138,15 +168,22 @@ public class PlayerMain : CombatAgent
     {
         base.ScreenWrap();
 
-        if (isWrappingX || isWrappingY)
+        if (_isWrappingX || _isWrappingY)
         {
             _pingPartSys.Play();
         }
     }
 
-    protected override void EndOfLife()
+    protected override IEnumerator EndOfLife()
     {
-        throw new System.NotImplementedException();
+        _dead = true;
+
+        ParticleSystem partSys = CreateDeathParticles();
+        partSys.gameObject.transform.localScale = partSys.gameObject.transform.localScale * 3;
+        yield return new WaitForSeconds(partSys.main.duration * 2f);
+        GameManager.ChangeScene(0);
+        yield return null;
     }
+
 
 }

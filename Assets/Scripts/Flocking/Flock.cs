@@ -99,4 +99,52 @@ public class Flock : MonoBehaviour
 
         return context;
     }
+
+
+    public string SaveAgentTransform()
+    {
+        string data = "|";
+
+        bool _first = true;
+
+        foreach(FlockAgent agent in agents)
+        {
+            //first entry doesn't need a ~ to start
+            if (_first)
+                data = data + agent.transform.position + ":" + agent.transform.up + ":" + agent.Health;
+            else
+            data = data + "~" + agent.transform.position + ":" + agent.transform.up + ":" + agent.Health;
+            _first = false;
+        }
+
+        return data;
+    }
+
+    public void LoadAgents(string[] loadAgents)
+    {
+        foreach (FlockAgent agent in agents)
+        {
+            Destroy(agent.gameObject);
+        }
+
+        agents.Clear();
+
+        for (int i = 0; i < loadAgents.Length; i++)
+        {
+            string[] agentTransform = loadAgents[i].Split(':');
+            
+            FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
+                agentPrefab, // this is the prefab
+                transform
+                );
+
+            newAgent.transform.position = MathExt.StringToVector3(agentTransform[0]);
+            newAgent.transform.up = MathExt.StringToVector3(agentTransform[1]);
+            newAgent.Health = float.Parse(agentTransform[2]);
+            newAgent.name = "Agent " + i;
+            newAgent.Initialise(this);
+            agents.Add(newAgent);
+
+        }
+    }
 }

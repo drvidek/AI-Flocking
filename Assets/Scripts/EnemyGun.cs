@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyGun : MasterGun
 {
     [SerializeField] private Transform _player;
-    [SerializeField] private MasterEnemy _myEnemy;
+    [SerializeField] private FlockAgent _myEnemy;
     [SerializeField] private Transform _myGun;
 
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class EnemyGun : MasterGun
         base.Start();
         _shotDelay = _shotDelayMax;
         _player = GameObject.Find("Player").transform;
-        _myEnemy = GetComponentInParent<MasterEnemy>();
+        _myEnemy = GetComponentInParent<FlockAgent>();
     }
 
     new void Update()

@@ -22,7 +22,7 @@ public abstract class MasterGun : MonoBehaviour
     [SerializeField] protected float _shotRechargeRate = 1f;
 
     public PlayerMain Player { get { return _owner as PlayerMain; } }
-    public MasterEnemy Enemy { get { return _owner as MasterEnemy; } }
+    public FlockAgent Enemy { get { return _owner as FlockAgent; } }
 
 
     virtual protected void Start()
@@ -39,7 +39,8 @@ public abstract class MasterGun : MonoBehaviour
         Vector3 _dir = CalculateDir();
         for (int i = 0; i < count; i++)
         {
-            GameObject _prefab = Instantiate(_bulletPrefab);
+            Vector3 _spawnPoint = (_shotSpawnPoint != null ? _shotSpawnPoint.position : transform.position);
+            GameObject _prefab = Instantiate(_bulletPrefab, _spawnPoint, new Quaternion(0,0,0,0));
             Bullet _newBullet = _prefab.GetComponent<Bullet>();
             ApplyBulletProperties(_newBullet, _dir, this.tag);
             _shotDelay = _shotDelayMax;

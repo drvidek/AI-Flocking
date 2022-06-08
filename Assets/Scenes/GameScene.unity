@@ -1104,7 +1104,7 @@ GameObject:
   - component: {fileID: 833025296}
   - component: {fileID: 833025294}
   - component: {fileID: 833025295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1123,11 +1123,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc9c0e95c054d740a4b0607136131d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthMax: 10000
+  _healthMax: 1
   _health: 0
   _spriteRenderer: {fileID: 0}
   _hitEffectCol: {r: 1, g: 0, b: 0, a: 1}
   _homeCol: {r: 0, g: 0, b: 0, a: 0}
+  _deathPart: {fileID: 1749924261501227558, guid: 82ac24b43cb9ba44bb308860f6382695, type: 3}
   _spdMax: 35
   _spdCurrent: 0
   _spdAccelCurrent: 0
@@ -1279,7 +1280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 861678829}
   - component: {fileID: 861678830}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: effect_yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1694,7 +1695,7 @@ GameObject:
   - component: {fileID: 1138686432}
   - component: {fileID: 1138686434}
   - component: {fileID: 1138686433}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1802,6 +1803,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pausePanel: {fileID: 1331041298}
+  _player: {fileID: 0}
+  flocks:
+  - {fileID: 889465174}
+  - {fileID: 110987659}
+  - {fileID: 280147874}
+  - {fileID: 1740852043}
 --- !u!198 &1181237015 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5285380114131891125, guid: 62080596daef2684f96eea55c299f69e, type: 3}
@@ -2305,7 +2312,7 @@ GameObject:
   - component: {fileID: 1541084870}
   - component: {fileID: 1541084869}
   - component: {fileID: 1541084871}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2472,7 +2479,7 @@ GameObject:
   - component: {fileID: 1743900666}
   - component: {fileID: 1743900665}
   - component: {fileID: 1743900664}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3383,7 +3390,7 @@ GameObject:
   - component: {fileID: 2094474487}
   - component: {fileID: 2094474489}
   - component: {fileID: 2094474488}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ping
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8353,6 +8360,10 @@ PrefabInstance:
     - target: {fileID: 5285380114131891124, guid: 62080596daef2684f96eea55c299f69e, type: 3}
       propertyPath: m_Name
       value: Thruster
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285380114131891124, guid: 62080596daef2684f96eea55c299f69e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5285380114131891125, guid: 62080596daef2684f96eea55c299f69e, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar

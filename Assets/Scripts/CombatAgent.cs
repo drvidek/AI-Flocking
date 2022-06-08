@@ -8,14 +8,17 @@ public abstract class CombatAgent : MonoBehaviour
     [Header("Health + Damage")]
     [SerializeField] protected float _healthMax;
     [SerializeField] protected float _health;
+    public float Health { get { return _health; } set { _health = value; } }
     [SerializeField] protected SpriteRenderer _spriteRenderer;
     [SerializeField] protected Color _hitEffectCol;
     [SerializeField] protected Color _homeCol;
+    public GameObject _deathPart;
 
-    protected bool isWrappingX = false;
-    protected bool isWrappingY = false;
+    protected bool _dead = false;
+    public bool Dead { get { return _dead; } }
 
-    public bool IsWrapping { get { return (isWrappingX || isWrappingY); } }
+    protected bool _isWrappingX = false;
+    protected bool _isWrappingY = false;
 
     virtual protected void Start()
     {
@@ -24,14 +27,14 @@ public abstract class CombatAgent : MonoBehaviour
         _homeCol = _spriteRenderer.color;
     }
 
-    protected abstract void EndOfLife();
+    protected abstract IEnumerator EndOfLife();
 
     public void TakeDamage(float hit)
     {
         _health -= hit;
         if (_health <= 0)
         {
-            EndOfLife();
+            StartCoroutine(EndOfLife());
         }
             StartCoroutine(HitEffect());
     }
@@ -42,12 +45,12 @@ public abstract class CombatAgent : MonoBehaviour
 
         if (isVisible)
         {
-            isWrappingX = false;
-            isWrappingY = false;
+            _isWrappingX = false;
+            _isWrappingY = false;
             return;
         }
 
-        if (isWrappingX && isWrappingY)
+        if (_isWrappingX && _isWrappingY)
         {
             return;
         }
@@ -56,18 +59,18 @@ public abstract class CombatAgent : MonoBehaviour
         var viewportPosition = cam.WorldToViewportPoint(transform.position);
         var newPosition = transform.position;
 
-        if (!isWrappingX && (viewportPosition.x > 1 || viewportPosition.x < 0))
+        if (!_isWrappingX && (viewportPosition.x > 1 || viewportPosition.x < 0))
         {
             newPosition.x = -newPosition.x;
 
-            isWrappingX = true;
+            _isWrappingX = true;
         }
 
-        if (!isWrappingY && (viewportPosition.y > 1 || viewportPosition.y < 0))
+        if (!_isWrappingY && (viewportPosition.y > 1 || viewportPosition.y < 0))
         {
             newPosition.y = -newPosition.y;
 
-            isWrappingY = true;
+            _isWrappingY = true;
         }
 
         transform.position = newPosition;
@@ -80,5 +83,14 @@ public abstract class CombatAgent : MonoBehaviour
         _spriteRenderer.color = _homeCol;
     }
 
+    protected ParticleSystem CreateDeathParticles()
+    {
+        GameObject _partOb = Instantiate(_deathPart);
+        _partOb.transform.position = transform.position;
+        ParticleSystem _partSys = _partOb.GetComponent<ParticleSystem>();
+        var _main = _partSys.main;
+        _main.startColor = _homeCol;
+        return _partSys;
+    }
 
 }
