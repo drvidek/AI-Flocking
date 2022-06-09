@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
         _trailPartSys = GetComponentInChildren<ParticleSystem>();
         _myRenderer.color = tag == "Player" ? Color.white : Color.red;
         if (tag == "Player")
-        _trailPartSys.Stop();
+            _trailPartSys.Stop();
     }
 
     protected void Update()
@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
         if (!GameManager.IsPaused())
         {
             Move();
-            transform.Rotate(new Vector3(0,0,360) * Time.deltaTime);
+            transform.Rotate(new Vector3(0, 0, 360) * Time.deltaTime);
             if (Vector2.Distance(transform.position, Vector2.zero) > 200f)
                 StartCoroutine(EndOfLife());
         }
@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
 
         float _dist = Vector2.Distance(transform.position, _dest);
 
-        
+
 
         if (tag == "Player")
         {
@@ -61,7 +61,7 @@ public class Bullet : MonoBehaviour
         else
         {
             Collider2D[] _rayHit;
-            _rayHit = Physics2D.OverlapCircleAll(transform.position,scale/2f);
+            _rayHit = Physics2D.OverlapCircleAll(transform.position, scale / 2f);
             if (_rayHit.Length > 0)
             {
                 foreach (Collider2D item in _rayHit)
@@ -83,11 +83,14 @@ public class Bullet : MonoBehaviour
             if (_hitAgent != null)
             {
                 _hitAgent.TakeDamage(power);
+                if (!_hitAgent.GetComponent<PlayerMain>())
+                    GlobalScore.IncreaseScore(10, (Vector2)_hitAgent.transform.position);
             }
             else
             if (_hitBullet != null)
             {
                 StartCoroutine(_hitBullet.EndOfLife());
+                GlobalScore.IncreaseScore(20, (Vector2)_hitBullet.transform.position);
             }
             StartCoroutine(EndOfLife());
             return true;

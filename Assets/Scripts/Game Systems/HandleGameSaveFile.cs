@@ -14,7 +14,7 @@ public static class HandleGameSaveFile
 
     //  KEY
     //  | = new parent (player, flock0-3)
-    //  - = new entry (individual agent)
+    //  ~ = new entry (individual agent)
     //  : = break in struct (transform.pos):(transform.up)
 
 
@@ -118,7 +118,5 @@ public static class HandleGameSaveFile
 
         return files;
     }
-
-
 
 }

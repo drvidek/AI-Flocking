@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
     public static bool IsPaused()
     {
         return currentGameState == GameState.pause;

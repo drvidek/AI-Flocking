@@ -92,7 +92,7 @@ public class PlayerMain : CombatAgent
 
     bool BoostActivated()
     {
-        return (Input.GetKeyDown(KeyBinds.keys["Boost"]) && _boostDelay == 0);
+        return (Input.GetKeyDown(KeyBinds.keys["Boost"]) && _boostDelay == 0 && !_dead);
     }
 
     void BoostToggle(bool active)
@@ -177,6 +177,15 @@ public class PlayerMain : CombatAgent
     protected override IEnumerator EndOfLife()
     {
         _dead = true;
+
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject item in bullets)
+        {
+            if (item.GetComponent<Bullet>())
+            {
+                Destroy(item);
+            }
+        }
 
         ParticleSystem partSys = CreateDeathParticles();
         partSys.gameObject.transform.localScale = partSys.gameObject.transform.localScale * 3;

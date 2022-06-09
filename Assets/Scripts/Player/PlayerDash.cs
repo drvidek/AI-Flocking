@@ -15,7 +15,7 @@ public class PlayerDash : MonoBehaviour
 
     private void Update()
     {
-        Collider2D[] _hits = Physics2D.OverlapCircleAll(transform.position, _collider.radius);
+        Collider2D[] _hits = Physics2D.OverlapCircleAll(transform.position, _collider.radius*1.1f);
         foreach (Collider2D other in _hits)
         {
             CombatAgent _hitAgent = other.GetComponentInParent<CombatAgent>();
@@ -25,6 +25,7 @@ public class PlayerDash : MonoBehaviour
                 if (_hitAgent != null)
                 {
                     _hitAgent.TakeDamage(_power);
+                    GlobalScore.IncreaseScore(50, (Vector2)_hitAgent.transform.position);
                 }
             }
         }

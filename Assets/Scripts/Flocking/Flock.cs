@@ -22,6 +22,8 @@ public class Flock : MonoBehaviour
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
 
+    public float spawnIncrease = 1f;
+
     public List<Transform> spawnPoints;
 
     float _squareMaxSpeed { get { return maxSpeed * maxSpeed; } }
@@ -60,7 +62,7 @@ public class Flock : MonoBehaviour
         {
             if (agents.Count == 0)
             {
-                spawnCount = (int)Mathf.Round((float)spawnCount * 1.5f);
+                spawnCount = (int)Mathf.Round((float)spawnCount * spawnIncrease);
                 SpawnAgents(spawnCount);
             }
             else

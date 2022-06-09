@@ -48,6 +48,8 @@ public class FlockAgent : CombatAgent
 
         CreateDeathParticles();
 
+        GlobalScore.IncreaseScore(100 * (int)_healthMax, (Vector2)transform.position);
+
         Destroy(this.gameObject);
         yield return null;
     }
