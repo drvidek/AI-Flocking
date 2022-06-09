@@ -6,7 +6,6 @@ public class StarParallax : MonoBehaviour
 {
     [SerializeField] private float _parallaxScale;
     PlayerMain _player;
-    Vector2 _offset;
     Vector2 _scale;
 
     // Start is called before the first frame update
@@ -26,8 +25,10 @@ public class StarParallax : MonoBehaviour
 
     public void MoveWithPlayer()
     {
-        transform.position -= (Vector3)_player.Velocity * Time.deltaTime * _parallaxScale;
+        float _finalParallaxScale = GameManager.IsPaused() ? _parallaxScale/2f : _parallaxScale;
+        transform.position -= (Vector3)_player.Velocity * Time.deltaTime * _finalParallaxScale;
         Vector3 _loopPos = transform.position;
+
         if (Mathf.Abs(transform.position.x) >= 2.56f * _scale.x)
         {
             _loopPos.x = 0;

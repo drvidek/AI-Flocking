@@ -9,10 +9,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] public static GameState currentGameState = GameState.game;
     [SerializeField] public GameObject _pausePanel;
     [SerializeField] private PlayerMain _player;
+    static int _loadFile = -1;
 
     private void Start()
     {
         GameObject.Find("Player").TryGetComponent<PlayerMain>(out _player);
+
+        if (_loadFile != -1)
+        {
+            LoadGameFromFile(_loadFile);
+            _loadFile = -1;
+        }
     }
 
     // Update is called once per frame
@@ -63,32 +70,71 @@ public class GameManager : MonoBehaviour
             flockData = flockData + flocks[i].SaveAgentTransform();
         }
 
-        RecordGameState.WriteSaveFile(_player.transform, flockData);
+        HandleGameSaveFile.WriteSaveFile(_player.transform, flockData);
     }
 
-    public void LoadGame(int file)
+    public void LoadGameFromFile(int file)
     {
         //fetch an array of player, flock0-3
-        string[] loadFiles = RecordGameState.ReadSaveFile(file);
 
-        if (loadFiles.Length > 0)
+        //loading
+        if (file < HandleGameSaveFile.saveSlots)
         {
-            Transform playerTransform = _player.transform;
+            string[] loadFiles = HandleGameSaveFile.ReadSaveFile(file);
 
-            string[] playerTrans = loadFiles[0].Split(':');
-            playerTransform.position = MathExt.StringToVector3(playerTrans[0]);
-            playerTransform.up = MathExt.StringToVector3(playerTrans[1]);
-
-            for (int i = 1; i < loadFiles.Length; i++)
+            if (loadFiles.Length > 0)
             {
-                string[] agentEntries = loadFiles[i].Split('~');
-                flocks[i - 1].LoadAgents(agentEntries);
-            }
+                Transform playerTransform = _player.transform;
 
-            //return true;
+                string[] playerTrans = loadFiles[0].Split(':');
+                playerTransform.position = MathExt.StringToVector3(playerTrans[0]);
+                playerTransform.up = MathExt.StringToVector3(playerTrans[1]);
+
+                for (int i = 1; i < loadFiles.Length; i++)
+                {
+                    if (loadFiles[i] != "")
+                    {
+                        string[] agentEntries = loadFiles[i].Split('~');
+                        flocks[i - 1].LoadAgents(agentEntries);
+                    }
+                }
+
+                string continueString = "";
+                foreach (string piece in loadFiles)
+                {
+                    continueString = continueString + piece + "|";
+                }
+
+                HandleGameSaveFile.WriteContinueFile(continueString);
+            }
         }
-        //else
-        //return false;
+        else    //continuing
+        {
+            string[] loadFiles = HandleGameSaveFile.ReadContinueFile();
+
+            if (loadFiles.Length > 0)
+            {
+                Transform playerTransform = _player.transform;
+
+                string[] playerTrans = loadFiles[0].Split(':');
+                playerTransform.position = MathExt.StringToVector3(playerTrans[0]);
+                playerTransform.up = MathExt.StringToVector3(playerTrans[1]);
+
+                for (int i = 1; i < loadFiles.Length; i++)
+                {
+                    if (loadFiles[i] != "")
+                    {
+                        string[] agentEntries = loadFiles[i].Split('~');
+                        flocks[i - 1].LoadAgents(agentEntries);
+                    }
+                }
+            }
+        }
+    }
+
+    public void QueueLoad(int file)
+    {
+        _loadFile = file;
     }
 
     public void QuitGame()
