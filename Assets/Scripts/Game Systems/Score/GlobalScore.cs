@@ -11,7 +11,13 @@ public static class GlobalScore
         _sm.IncreaseScore(points, position);
     }
 
-    public static string FecthScore()
+    public static void ResetScore()
+    {
+        ScoreKeeper _sm = GameObject.Find("GameManager").GetComponent<ScoreKeeper>();
+        _sm.ResetScore();
+    }
+
+    public static string GetScore()
     {
         ScoreKeeper _sm = GameObject.Find("GameManager").GetComponent<ScoreKeeper>();
         return _sm.Score.ToString();

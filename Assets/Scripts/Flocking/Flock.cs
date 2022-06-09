@@ -124,13 +124,7 @@ public class Flock : MonoBehaviour
 
     public void LoadAgents(string[] loadAgents)
     {
-        foreach (FlockAgent agent in agents)
-        {
-            Destroy(agent.gameObject);
-        }
-
-        agents.Clear();
-
+        ClearAgents();
         for (int i = 0; i < loadAgents.Length; i++)
         {
             string[] agentTransform = loadAgents[i].Split(':');
@@ -148,5 +142,15 @@ public class Flock : MonoBehaviour
             agents.Add(newAgent);
 
         }
+    }
+
+    public void ClearAgents()
+    {
+        foreach (FlockAgent agent in agents)
+        {
+            Destroy(agent.gameObject);
+        }
+
+        agents.Clear();
     }
 }

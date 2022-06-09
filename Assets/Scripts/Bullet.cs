@@ -21,6 +21,8 @@ public class Bullet : MonoBehaviour
         _myRenderer.color = tag == "Player" ? Color.white : Color.red;
         if (tag == "Player")
             _trailPartSys.Stop();
+
+        GameManager.bullets.Add(this);
     }
 
     protected void Update()
@@ -109,7 +111,7 @@ public class Bullet : MonoBehaviour
             var _main = _partSys.main;
             _main.startColor = _myRenderer.color;
         }
-
+        GameManager.bullets.Remove(this);
         Destroy(this.gameObject);
         yield return null;
     }

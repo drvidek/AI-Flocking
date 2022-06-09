@@ -8,7 +8,7 @@ public class ScoreKeeper : MonoBehaviour
     private int _score;
     public int Score { get { return _score; } }
 
-    private string _scoreString;
+    private string _scoreString = "SCORE: ";
 
     [SerializeField] private Text _scoreText;
 
@@ -17,7 +17,6 @@ public class ScoreKeeper : MonoBehaviour
 
     private void Start()
     {
-        _scoreString = _scoreText.text;
         UpdateScoreText();
     }
 
@@ -28,6 +27,11 @@ public class ScoreKeeper : MonoBehaviour
         GameObject popupPrefab = Resources.Load(scorePopupPath) as GameObject;
         ScorePopup _popup = Instantiate(popupPrefab, new Vector3(position.x,position.y,-2), new Quaternion(0,0,0,0)).GetComponent<ScorePopup>();
         _popup.Points = points.ToString();
+    }
+
+    public void ResetScore()
+    {
+        _score = 0;
     }
 
     private void UpdateScoreText()

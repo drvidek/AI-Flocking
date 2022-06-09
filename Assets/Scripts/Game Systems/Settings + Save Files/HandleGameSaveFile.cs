@@ -18,16 +18,16 @@ public static class HandleGameSaveFile
     //  : = break in struct (transform.pos):(transform.up)
 
 
-    public static void WriteSaveFile(Transform player, string flockString)
+    public static void WriteSaveFile(string savestring)
     {
         List<string> files = ListSaveFiles();
 
         StreamWriter saveWrite = new StreamWriter(pathSave, false);
 
-        // get the current gamestate save string
-        string _saveTransform = player.position.ToString() + ":" + player.up.ToString() + flockString;
-        //write that to the text file
-        saveWrite.WriteLine(_saveTransform);
+        //write the save string to the text file
+        saveWrite.WriteLine(savestring);
+
+        //for each valid slot + file, write the old saves 1 slot down
         int i = 0;
         if (files.Count > 0)
         {
@@ -40,7 +40,7 @@ public static class HandleGameSaveFile
 
         saveWrite.Close();
 
-        WriteContinueFile(_saveTransform);
+        WriteContinueFile(savestring);
     }
 
     [MenuItem("My Tools/Default savedata")]

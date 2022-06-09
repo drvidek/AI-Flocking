@@ -10,10 +10,11 @@ public class PlayerMain : CombatAgent
     Collider2D _myCollider;
     public bool ShotFired { set { _shotFired = value; } }
     [SerializeField] private Vector2 _myVelocity;
-    public Vector2 Velocity { get { return _myVelocity; } }
+    public Vector2 Velocity { get { return _myVelocity; } set { _myVelocity = value ; } }
 
 
     float _boostDelay;
+    public float BoostDelay { get { return _boostDelay; } set { _boostDelay = value; } }
     [SerializeField] private float _boostDelayMax = 3f, _boostRate = 1.3f, _boostDuration = 0.5f;
     bool _boostActive;
     [SerializeField] private GameObject _boostField;
@@ -50,7 +51,6 @@ public class PlayerMain : CombatAgent
                 _myVelocity += Thrust();
                 _myVelocity += Recoil();
 
-                _boostImage.fillAmount = _boostDelay == 0 ? 0 : 1 - _boostDelay / _boostDelayMax;
             }
 
             if (_dead)
@@ -58,7 +58,6 @@ public class PlayerMain : CombatAgent
                 _myVelocity = Vector2.zero;
                 _spriteRenderer.enabled = false;
                 _myCollider.enabled = false;
-                _boostImage.fillAmount = 0;
             }
 
             Move((Vector3)_myVelocity * Time.deltaTime);
@@ -77,8 +76,10 @@ public class PlayerMain : CombatAgent
 
             ScreenWrap();
         }
+        UpdateBoostGUI();
     }
 
+    #region Inputs + Movement
     Vector3 Turn()
     {
         float _rotZ = (Input.GetKey(KeyBinds.keys["Left"])) ? 1 : (Input.GetKey(KeyBinds.keys["Right"])) ? -1 : 0;
@@ -172,7 +173,8 @@ public class PlayerMain : CombatAgent
         {
             _pingPartSys.Play();
         }
-    }
+    } 
+    #endregion
 
     protected override IEnumerator EndOfLife()
     {
@@ -194,5 +196,10 @@ public class PlayerMain : CombatAgent
         yield return null;
     }
 
+    public void UpdateBoostGUI()
+    {
+        _boostImage.fillAmount = _dead ? 0 : _boostDelay == 0 ? 0 : 1 - _boostDelay / _boostDelayMax;
+
+    }
 
 }
