@@ -26,7 +26,7 @@ public class KeyBinds : MonoBehaviour
     void Start()
     {
         HandleKeybindFile.ReadSaveFile();
-        if (PlayerPrefs.HasKey("FirstLoad"))
+        if (!PlayerPrefs.HasKey("FirstLoad"))
         {
             for (int i = 0; i < baseSetup.Length; i++)
             {
@@ -45,18 +45,11 @@ public class KeyBinds : MonoBehaviour
             baseSetup[i].keyDisplayText.text = keys[baseSetup[i].keyName].ToString();
 
         }
-        ///add the keys to the dictionary on start
-       
     }
 
     public void SaveKeys()
     {
-        /*foreach (var keyEntry in keys)
-        {
-            PlayerPrefs.SetString(keyEntry.Key, keyEntry.Value.ToString());
-        }
-        PlayerPrefs.Save();*/
-        HandleKeybindFile.WriteSaveFile();
+       HandleKeybindFile.WriteSaveFile();
     }
 
     public void ChangeKey(GameObject clickedKey)
