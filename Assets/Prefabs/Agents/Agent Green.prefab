@@ -209,11 +209,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthMax: 3
   _health: 0
-  _spriteRenderer: {fileID: 0}
+  _spriteRenderer: {fileID: 8896739780491813964}
   _hitEffectCol: {r: 1, g: 1, b: 1, a: 1}
   _homeCol: {r: 0, g: 0, b: 0, a: 0}
-  filter: {fileID: 0}
   _deathPart: {fileID: 1749924261501227558, guid: 82ac24b43cb9ba44bb308860f6382695, type: 3}
+  filter: {fileID: 0}
 --- !u!114 &4326108356825445493
 MonoBehaviour:
   m_ObjectHideFlags: 0

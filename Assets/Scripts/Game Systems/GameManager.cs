@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerMain _player;
     public static List<Bullet> bullets = new List<Bullet>();
     static int _loadFile = -1;
+    public static string bulletPrefabPath = "Prefabs/Bullet";
 
     private void Start()
     {
@@ -47,8 +48,8 @@ public class GameManager : MonoBehaviour
                 _pausePanel.SetActive(false);
             }
         }
-
     }
+
     public static bool IsPaused()
     {
         return currentGameState == GameState.pause;
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         string bulletData = CreateBulletSaveString();
 
-        string _saveFile = score + _playerData + flockData;
+        string _saveFile = score + _playerData + flockData + bulletData;
 
         HandleGameSaveFile.WriteSaveFile(_saveFile);
     }
@@ -89,7 +90,9 @@ public class GameManager : MonoBehaviour
             if (loadParents.Length > 0)
             {
                 ParseParentArray(loadParents);
+                Debug.Log("Parsed array and loaded");
                 HandleGameSaveFile.WriteContinueFile(PackParentArraysToString(loadParents));
+                Debug.Log("Wrote Continue File");
             }
         }
         else    //continuing
@@ -101,6 +104,8 @@ public class GameManager : MonoBehaviour
                 ParseParentArray(continueParents);
             }
         }
+        Debug.Log("Completed Load");
+
     }
 
     public void ParseParentArray(string[] loadFiles)
@@ -115,7 +120,7 @@ public class GameManager : MonoBehaviour
 
         //2-5 = flocks
         int flockStart = 2;
-        for (int i = flockStart; i < loadFiles.Length; i++)
+        for (int i = flockStart; i < loadFiles.Length - 1; i++)
         {
             if (loadFiles[i] != "")
             {
@@ -123,6 +128,11 @@ public class GameManager : MonoBehaviour
                 flocks[i - flockStart].LoadAgents(agentEntries);
             }
         }
+
+        //6 = bullets
+        //unpack the string into an array
+        string[] bulletArray = loadFiles[6].Split('~');
+        ParseBulletArray(bulletArray);
     }
 
     public string CreatePlayerSaveString()
@@ -143,31 +153,75 @@ public class GameManager : MonoBehaviour
     {
         string bulletData = "|";
 
-        foreach (Bullet bullet in bullets)
-        {
-            bulletData = bulletData
-                + bullet.transform.position.ToString() + ":"   //0
-            + bullet.direction.ToString() + ":" //1
-            + bullet.spd.ToString() + ":"     //2
-            + bullet.tag.ToString()        //4
-            + "~";
-        }
+        if (bullets.Count > 0)
+            foreach (Bullet bullet in bullets)
+            {
+                Vector3 _dir = (Vector3)bullet.direction;
+
+                bulletData = bulletData
+                    + bullet.transform.position.ToString() + ":"   //0
+                + _dir.ToString() + ":" //1
+                + bullet.spd.ToString() + ":"     //2
+                + bullet.tag.ToString()        //3
+                + "~";
+            }
+
+        if (bulletData.Length > 1)
+        bulletData = bulletData.Remove(bulletData.Length - 1);
 
         return bulletData;
     }
 
-    public void ParseBulletArray()
+    public void ParseBulletArray(string[] bulletArray)
     {
-        //bullet.transform.position = (_shotSpawnPoint != null) ? _shotSpawnPoint.position : transform.position;
-        //bullet.direction = _dir;
-        //bullet.tag = tag;
-        //bullet.spd = _shotSpeed;
-        //bullet.power = _shotPower;
-        //bullet.scale = _shotSize;
+        for (int i = 0; i < bullets.Count; i++)
+        {
+            Destroy(bullets[i].gameObject);
+        }
 
-        //if tag = enemy, scale and color = 3 and red
-        //else scale = 1 and colour = white
+        bullets.Clear();
 
+        GameObject prefab = Resources.Load(bulletPrefabPath) as GameObject;
+
+        Debug.Log(bulletArray.Length + " bullets to load");
+        Debug.Log(prefab.name + "  Prefab Loaded");
+
+        for (int i = 0; i < bulletArray.Length; i++)
+        {
+            if (bulletArray[i] != "")
+            {
+                string[] bulletDetails = bulletArray[i].Split(':');
+
+                foreach (string item in bulletDetails)
+                {
+                    Debug.Log(item);
+                }
+
+                GameObject bulletObject = Instantiate( //creates a clone of gameobject or prefab
+                    prefab,  // this is the prefab
+                    MathExt.StringToVector3(bulletDetails[0]),
+                    new Quaternion(0, 0, 0, 0)
+                    );
+                Bullet bullet = bulletObject.GetComponent<Bullet>();
+
+                Vector3 _direction = MathExt.StringToVector3(bulletDetails[1]);
+
+                bullet.direction = (Vector2)_direction;
+                bullet.spd = float.Parse(bulletDetails[2]);
+                bullet.tag = bulletDetails[3];
+
+                bullet.scale = bullet.tag == "Player" ? 1 : 3;
+                bullet.color = bullet.tag == "Player" ? Color.white : Color.red;
+
+                bullet.ApplyProperties();
+
+                Debug.Log(bullet.ToString() + " " + i + " loaded");
+
+            }
+            else
+                Debug.Log("Invalid bullet");
+        }
+        Debug.Log("Bullets loaded");
     }
 
     public void ParsePlayerArray(string[] playerArray)
@@ -190,6 +244,7 @@ public class GameManager : MonoBehaviour
         {
             packedString = packedString + piece + "|";
         }
+        packedString = packedString.Remove(packedString.Length - 1);
 
         return packedString;
     }
@@ -199,6 +254,8 @@ public class GameManager : MonoBehaviour
     #region Scene Changing
     public static void ChangeScene(int sceneIndex)
     {
+        if (bullets.Count > 0)
+            bullets.Clear();
         SceneManager.LoadScene(sceneIndex);
     }
     public void QueueLoad(int file)

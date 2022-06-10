@@ -101,7 +101,10 @@ MonoBehaviour:
   spd: 0
   scale: 0
   power: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
+  _myRenderer: {fileID: 208718685239626319}
   _deathPart: {fileID: 1749924261501227558, guid: 82ac24b43cb9ba44bb308860f6382695, type: 3}
+  _trailPartSys: {fileID: 6655474186675947032}
 --- !u!58 &-805257923755270936
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -290,5 +293,10 @@ PrefabInstance:
 --- !u!4 &6655474186675947030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5285380114131891131, guid: 62080596daef2684f96eea55c299f69e, type: 3}
+  m_PrefabInstance: {fileID: 1514774867317405101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6655474186675947032 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5285380114131891125, guid: 62080596daef2684f96eea55c299f69e, type: 3}
   m_PrefabInstance: {fileID: 1514774867317405101}
   m_PrefabAsset: {fileID: 0}

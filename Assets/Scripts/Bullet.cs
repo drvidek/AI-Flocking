@@ -8,21 +8,27 @@ public class Bullet : MonoBehaviour
     public float spd;
     public float scale;
     public float power;
-    SpriteRenderer _myRenderer;
+    public Color color;
+    [SerializeField] private SpriteRenderer _myRenderer;
     [SerializeField] private GameObject _deathPart;
-    ParticleSystem _trailPartSys;
+    [SerializeField] private ParticleSystem _trailPartSys;
 
 
     virtual protected void Start()
     {
-        transform.localScale = new Vector3(scale, scale, 1);
         _myRenderer = GetComponent<SpriteRenderer>();
         _trailPartSys = GetComponentInChildren<ParticleSystem>();
-        _myRenderer.color = tag == "Player" ? Color.white : Color.red;
+        color = tag == "Player" ? Color.white : Color.red;
+        GameManager.bullets.Add(this);
+        ApplyProperties();
+    }
+
+    virtual public void ApplyProperties()
+    {
+        transform.localScale = new Vector3(scale, scale, 1);
+        _myRenderer.color = color;
         if (tag == "Player")
             _trailPartSys.Stop();
-
-        GameManager.bullets.Add(this);
     }
 
     protected void Update()
@@ -41,8 +47,6 @@ public class Bullet : MonoBehaviour
         Vector3 _dest = transform.position + ((Vector3)direction.normalized * spd * Time.deltaTime);
 
         float _dist = Vector2.Distance(transform.position, _dest);
-
-
 
         if (tag == "Player")
         {
