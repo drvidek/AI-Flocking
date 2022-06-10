@@ -11,10 +11,12 @@ public class LoadButtonHandler : MonoBehaviour
     {
         ResetButtons();
         List<string> files = HandleGameSaveFile.ListSaveFiles();
-        if (files.Count > 0)
-        for (int i = 0; i < files.Count && i < loadButtons.Length; i++)
+        for (int i = 0; i < loadButtons.Length; i++)
         {
-            loadButtons[i].interactable = true;
+            if (files[i] != "")
+            {
+                loadButtons[i].interactable = true;
+            }
         }
     }
 

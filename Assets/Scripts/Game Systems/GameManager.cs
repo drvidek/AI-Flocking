@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Flock[] flocks;
 
     #region Save + Load
-    public void SaveGame()
+    public void SaveGame(int file)
     {
         string score = GlobalScore.GetScore();
 
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 
         string _saveFile = score + _playerData + flockData + bulletData;
 
-        HandleGameSaveFile.WriteSaveFile(_saveFile);
+        HandleGameSaveFile.WriteSaveFile(_saveFile, file);
     }
 
     public void LoadGameFromFile(int file)

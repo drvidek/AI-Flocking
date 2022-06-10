@@ -18,24 +18,26 @@ public static class HandleGameSaveFile
     //  : = break in struct (transform.pos):(transform.up)
 
 
-    public static void WriteSaveFile(string savestring)
+    public static void WriteSaveFile(string savestring, int file)
     {
         List<string> files = ListSaveFiles();
 
-        StreamWriter saveWrite = new StreamWriter(pathSave, false);
+        while (files.Count < saveSlots)
+        {
+            files.Add("");
+        }
 
-        //write the save string to the text file
-        saveWrite.WriteLine(savestring);
+        //overwrite the relevant slot
+        files[file] = savestring;
+
+        StreamWriter saveWrite = new StreamWriter(pathSave, false);
 
         //for each valid slot + file, write the old saves 1 slot down
         int i = 0;
-        if (files.Count > 0)
+        while (i < saveSlots)
         {
-            while (i < saveSlots - 1 && i < files.Count)
-            {
-                saveWrite.WriteLine(files[i]);
-                i++;
-            }
+            saveWrite.WriteLine(files[i]);
+            i++;
         }
 
         saveWrite.Close();
@@ -93,7 +95,7 @@ public static class HandleGameSaveFile
 
         Debug.Log(files[file]);
 
-        if (files[file] != null)
+        if (files[file] != null && files[file] != "")
         {
             loadString = files[file].Split('|');
         }
@@ -109,7 +111,7 @@ public static class HandleGameSaveFile
         List<string> files = new List<string>();
 
         string readLine;
-        while ((readLine = saveRead.ReadLine()) != null && readLine != "")
+        while ((readLine = saveRead.ReadLine()) != null)
         {
             files.Add(readLine);
         }
