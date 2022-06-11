@@ -54,7 +54,6 @@ public class Settings : MonoBehaviour
 
         float newVol;
         masterAudio.GetFloat(currentSlider, out newVol);
-        Debug.Log(currentSlider + " mute toggle to" + newVol);
     }
 
     public void CurrentSlider(string sliderName)
@@ -67,7 +66,6 @@ public class Settings : MonoBehaviour
         masterAudio.SetFloat(currentSlider, volume);
         float newVol;
         masterAudio.GetFloat(currentSlider, out newVol);
-        Debug.Log(currentSlider + " set to " + newVol);
     }
     #endregion
 

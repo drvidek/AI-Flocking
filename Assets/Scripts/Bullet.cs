@@ -90,13 +90,17 @@ public class Bullet : MonoBehaviour
             {
                 _hitAgent.TakeDamage(power);
                 if (!_hitAgent.GetComponent<PlayerMain>())
+                {
                     GlobalScore.IncreaseScore(10, (Vector2)_hitAgent.transform.position);
+                    GlobalScore.IncreaseComboMeter(0.2f);
+                }
             }
             else
             if (_hitBullet != null)
             {
                 StartCoroutine(_hitBullet.EndOfLife());
                 GlobalScore.IncreaseScore(20, (Vector2)_hitBullet.transform.position);
+                GlobalScore.IncreaseComboMeter(0.2f);
             }
             StartCoroutine(EndOfLife());
             return true;

@@ -5408,11 +5408,11 @@ MonoBehaviour:
     buttonObject: {fileID: 2402353641158172270}
   - keyName: Boost
     keyDisplayText: {fileID: 2402353641514433454}
-    defaultKey: E
+    defaultKey: LeftShift
     buttonObject: {fileID: 2402353641261591180}
   - keyName: Pause
     keyDisplayText: {fileID: 2402353641058518774}
-    defaultKey: P
+    defaultKey: Escape
     buttonObject: {fileID: 2402353641163565374}
   currentKeyButton: {fileID: 0}
   currentKeyCol:

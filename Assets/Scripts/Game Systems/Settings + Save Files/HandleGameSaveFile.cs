@@ -61,6 +61,7 @@ public static class HandleGameSaveFile
         StreamWriter contWrite = new StreamWriter(pathContinue, false);
         contWrite.WriteLine("");
         contWrite.Close();
+        PlayerPrefs.DeleteKey("Firstload");
     }
 
     public static void WriteContinueFile(string fileString)

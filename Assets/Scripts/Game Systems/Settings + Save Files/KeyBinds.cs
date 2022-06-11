@@ -28,13 +28,7 @@ public class KeyBinds : MonoBehaviour
         HandleKeybindFile.ReadSaveFile();
         if (!PlayerPrefs.HasKey("FirstLoad"))
         {
-            for (int i = 0; i < baseSetup.Length; i++)
-            {
-                //add key according to the saved string
-                keys.Add(baseSetup[i].keyName, (KeyCode)System.Enum.Parse(typeof(KeyCode), baseSetup[i].defaultKey));
-            }
-            HandleKeybindFile.WriteSaveFile();
-            PlayerPrefs.SetString("FirstLoad", "");
+            DefaultKeyBinds();
         }
         else
         {
@@ -45,6 +39,18 @@ public class KeyBinds : MonoBehaviour
             baseSetup[i].keyDisplayText.text = keys[baseSetup[i].keyName].ToString();
 
         }
+    }
+
+    public void DefaultKeyBinds()
+    {
+        keys.Clear();
+        for (int i = 0; i < baseSetup.Length; i++)
+        {
+            //add key according to the saved string
+            keys.Add(baseSetup[i].keyName, (KeyCode)System.Enum.Parse(typeof(KeyCode), baseSetup[i].defaultKey));
+        }
+        HandleKeybindFile.WriteSaveFile();
+        PlayerPrefs.SetString("FirstLoad","");
     }
 
     public void SaveKeys()

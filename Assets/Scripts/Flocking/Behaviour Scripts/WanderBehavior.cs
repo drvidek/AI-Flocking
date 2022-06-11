@@ -21,13 +21,9 @@ public class WanderBehavior : FilteredFlockBehaviour
 
     private Vector2 FollowPath(FlockAgent agent)
     {
-        Debug.Log("Hit Follow Path");
-        Debug.Log(_path);
-
         if (_path == null) return Vector2.zero;
 
         Vector3 waypointDir;
-        Debug.Log("Waypoint " + _currentWaypoint);
 
         if (WaypointInRadius(agent, _currentWaypoint, out waypointDir))
         {

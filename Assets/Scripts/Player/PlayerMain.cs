@@ -11,12 +11,13 @@ public class PlayerMain : CombatAgent
     public bool ShotFired { set { _shotFired = value; } }
     [SerializeField] private Vector2 _myVelocity;
     public Vector2 Velocity { get { return _myVelocity; } set { _myVelocity = value ; } }
-
-
     float _boostDelay;
     public float BoostDelay { get { return _boostDelay; } set { _boostDelay = value; } }
     [SerializeField] private float _boostDelayMax = 3f, _boostRate = 1.3f, _boostDuration = 0.5f;
     bool _boostActive;
+
+    bool _comboReset;
+
     [SerializeField] private GameObject _boostField;
     [SerializeField] private Image _boostImage;
     [SerializeField] private ParticleSystem _pingPartSys;
@@ -171,8 +172,15 @@ public class PlayerMain : CombatAgent
 
         if (_isWrappingX || _isWrappingY)
         {
-            _pingPartSys.Play();
+            if (!_comboReset)
+            {
+                _pingPartSys.Play();
+                GlobalScore.ResetCombo();
+                _comboReset = true;
+            }
         }
+        else
+            _comboReset = false;
     } 
     #endregion
 

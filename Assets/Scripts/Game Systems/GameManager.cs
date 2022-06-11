@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     #region Save + Load
     public void SaveGame(int file)
     {
-        string score = GlobalScore.GetScore();
+        string score = CreateScoreSaveString();
 
         string _playerData = CreatePlayerSaveString();
 
@@ -112,7 +112,11 @@ public class GameManager : MonoBehaviour
     {
         //0 = score
         GlobalScore.ResetScore();
-        GlobalScore.IncreaseScore(int.Parse(loadFiles[0]), new Vector2(-1000, -1000));
+
+        string[] scoreArray = loadFiles[0].Split(':');
+
+        GlobalScore.IncreaseScore(int.Parse(scoreArray[0]), new Vector2(-1000, -1000));
+        GlobalScore.SetCombo(int.Parse(scoreArray[1]), float.Parse(scoreArray[2]));
 
         //1 - player
         string[] playerArray = loadFiles[1].Split(':');
@@ -133,6 +137,12 @@ public class GameManager : MonoBehaviour
         //unpack the string into an array
         string[] bulletArray = loadFiles[6].Split('~');
         ParseBulletArray(bulletArray);
+    }
+
+    public string CreateScoreSaveString()
+    {
+        string score = GlobalScore.GetScore() + ":" + GlobalScore.GetCombo();
+        return score;
     }
 
     public string CreatePlayerSaveString()
