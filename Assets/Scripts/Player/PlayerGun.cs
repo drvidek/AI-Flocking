@@ -14,7 +14,7 @@ public class PlayerGun : MasterGun
 
     override protected bool Shoot()
     {
-        return !_owner.Dead && _shotDelay == 0 && (Input.GetKey(KeyBinds.keys["Shoot"]));
+        return !Player.Dead && !Player.BoostActive && _shotDelay == 0 && (Input.GetKey(KeyBinds.keys["Shoot"]));
     }
 
 

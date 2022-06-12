@@ -12,13 +12,14 @@ public abstract class CombatAgent : MonoBehaviour
     [SerializeField] protected SpriteRenderer _spriteRenderer;
     [SerializeField] protected Color _hitEffectCol;
     [SerializeField] protected Color _homeCol;
-    public GameObject _deathPart;
+    public GameObject _deathPartSys;
 
     protected bool _dead = false;
     public bool Dead { get { return _dead; } }
 
     protected bool _isWrappingX = false;
     protected bool _isWrappingY = false;
+
 
     virtual protected void Start()
     {
@@ -31,7 +32,7 @@ public abstract class CombatAgent : MonoBehaviour
 
     protected abstract IEnumerator EndOfLife();
 
-    public void TakeDamage(float hit)
+    virtual public void TakeDamage(float hit)
     {
         _health -= hit;
         if (_health <= 0)
@@ -87,7 +88,7 @@ public abstract class CombatAgent : MonoBehaviour
 
     protected ParticleSystem CreateDeathParticles()
     {
-        GameObject _partOb = Instantiate(_deathPart);
+        GameObject _partOb = Instantiate(_deathPartSys);
         _partOb.transform.position = transform.position;
         ParticleSystem _partSys = _partOb.GetComponent<ParticleSystem>();
         var _main = _partSys.main;

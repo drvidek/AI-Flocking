@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject _deathPart;
     [SerializeField] private ParticleSystem _trailPartSys;
 
-
     virtual protected void Start()
     {
         _myRenderer = GetComponent<SpriteRenderer>();

@@ -21,6 +21,9 @@ public abstract class MasterGun : MonoBehaviour
     [SerializeField] protected float _shotDelayMax = 0.3f;
     [SerializeField] protected float _shotRechargeRate = 1f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource _shotSound;
+
     public PlayerMain Player { get { return _owner as PlayerMain; } }
     public FlockAgent Enemy { get { return _owner as FlockAgent; } }
 
@@ -65,6 +68,7 @@ public abstract class MasterGun : MonoBehaviour
             if (Shoot())
             {
                 CreateBullets(_shotCount);
+                _shotSound.Play();
             }
             else
             {

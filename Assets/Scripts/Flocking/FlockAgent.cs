@@ -14,6 +14,9 @@ public class FlockAgent : CombatAgent
 
     private List<Vector2> _pointDir = new List<Vector2>();
 
+    [SerializeField] private AudioSource _hitSound;
+
+
     new void Start()
     {
         base.Start();
@@ -40,6 +43,13 @@ public class FlockAgent : CombatAgent
         transform.position += (Vector3)velocity * Time.deltaTime; //move the AI
 
         ScreenWrap();
+    }
+
+    public override void TakeDamage(float hit)
+    {
+        _hitSound.Play();
+
+        base.TakeDamage(hit);
     }
 
     protected override IEnumerator EndOfLife()

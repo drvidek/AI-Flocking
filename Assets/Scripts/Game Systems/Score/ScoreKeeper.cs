@@ -19,6 +19,8 @@ public class ScoreKeeper : MonoBehaviour
     [SerializeField] private Text _comboText;
     [SerializeField] private Animator _comboTextAnim;
     [SerializeField] private Image _comboBar;
+    [SerializeField] private AudioSource _comboUpSFX;
+    [SerializeField] private AudioSource _comboBreakSFX;
 
     public static string scorePopupPath = "Prefabs/Score Popup";
 
@@ -55,6 +57,7 @@ public class ScoreKeeper : MonoBehaviour
             _comboMeter = 0;
             _comboBar.fillAmount = _comboMeter;
             _comboTextAnim.SetTrigger("ComboIncrease");
+            _comboUpSFX.Play();
             UpdateComboText();
         }
     }
@@ -77,6 +80,7 @@ public class ScoreKeeper : MonoBehaviour
         Debug.Log("Reset triggered");
         _combo = 1;
         _comboMeter = 0;
+        _comboBreakSFX.Play();
         UpdateComboText();
         _comboTextAnim.SetTrigger("ComboBreak");
 

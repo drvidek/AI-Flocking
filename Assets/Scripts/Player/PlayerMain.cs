@@ -5,29 +5,41 @@ using UnityEngine.UI;
 
 public class PlayerMain : CombatAgent
 {
-    [SerializeField] private float _spdMax = 40f, _spdCurrent, _spdAccelCurrent, _spdAccel, _fric = 1f, _turnSpd = 200f, _recoil = 2f;
+    [Header("Speeds")]
+    [SerializeField] private float _spdMax = 40f;
+    [SerializeField] private float _spdCurrent, _spdAccelCurrent, _spdAccel, _fric = 1f, _turnSpd = 200f, _recoil = 2f;
     private bool _shotFired;
     Collider2D _myCollider;
     public bool ShotFired { set { _shotFired = value; } }
     [SerializeField] private Vector2 _myVelocity;
     public Vector2 Velocity { get { return _myVelocity; } set { _myVelocity = value ; } }
     float _boostDelay;
-    public float BoostDelay { get { return _boostDelay; } set { _boostDelay = value; } }
-    [SerializeField] private float _boostDelayMax = 3f, _boostRate = 1.3f, _boostDuration = 0.5f;
-    bool _boostActive;
 
+    [Header("Boost")]
+    [SerializeField] private float _boostDelayMax = 3f;
+    [SerializeField] private float _boostRate = 1.3f, _boostDuration = 0.5f;
+    [SerializeField] private GameObject _boostField;
+
+    public float BoostDelay { get { return _boostDelay; } set { _boostDelay = value; } }
+
+    bool _boostActive;
+    public bool BoostActive { get { return _boostActive; } }
     bool _comboReset;
 
-    [SerializeField] private GameObject _boostField;
+    [Header("Effects")]
     [SerializeField] private Image _boostImage;
     [SerializeField] private ParticleSystem _pingPartSys;
     [SerializeField] private ParticleSystem _thrustPartSys;
+    [SerializeField] private ParticleSystem _boostPartSys;
+    [SerializeField] private AudioSource _boostRegenSfx;
+    bool _boostPartDone;
 
     new void Start()
     {
         base.Start();
         HandleKeybindFile.ReadSaveFile();
         _myCollider = GetComponent<Collider2D>();
+        _boostPartDone = true;
     }
 
     // Update is called once per frame
@@ -44,6 +56,14 @@ public class PlayerMain : CombatAgent
             else if (BoostActivated())
             {
                 BoostToggle(true);
+                _boostPartDone = false;
+            }
+
+            if (_boostDelay == 0 && !_boostPartDone && !_dead)
+            {
+                _boostPartSys.Play();
+                _boostRegenSfx.Play();
+                _boostPartDone = true;
             }
 
             if (!_boostActive)
@@ -200,13 +220,13 @@ public class PlayerMain : CombatAgent
         ParticleSystem partSys = CreateDeathParticles();
         partSys.gameObject.transform.localScale = partSys.gameObject.transform.localScale * 3;
         yield return new WaitForSeconds(partSys.main.duration * 2f);
-        GameManager.ChangeScene(0);
+        GameManager.currentGameState = GameState.postgame;
         yield return null;
     }
 
     public void UpdateBoostGUI()
     {
-        _boostImage.fillAmount = _dead ? 0 : _boostDelay == 0 ? 0 : 1 - _boostDelay / _boostDelayMax;
+        _boostImage.fillAmount = _dead || _boostDelay == 0 || _boostActive ? 0 : 1 - _boostDelay / _boostDelayMax;
 
     }
 

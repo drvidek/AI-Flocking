@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 [System.Serializable] public enum GameState { pregame, game, pause, postgame }
@@ -8,14 +9,18 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] public static GameState currentGameState = GameState.game;
     [SerializeField] public GameObject _pausePanel;
+    [SerializeField] public GameObject _endPanel;
+    [SerializeField] private Text[] _scoreEndText;
     [SerializeField] private PlayerMain _player;
     public static List<Bullet> bullets = new List<Bullet>();
     static int _loadFile = -1;
     public static string bulletPrefabPath = "Prefabs/Bullet";
 
+
     private void Start()
     {
         GameObject.Find("Player").TryGetComponent<PlayerMain>(out _player);
+        _endPanel.SetActive(false);
 
         if (_loadFile != -1)
         {
@@ -30,6 +35,11 @@ public class GameManager : MonoBehaviour
         if (_player != null && Input.GetKeyDown(KeyBinds.keys["Pause"]) && !_player.Dead)
         {
             TogglePause();
+        }
+
+        if (currentGameState == GameState.postgame)
+        {
+            EndRound();
         }
     }
 
@@ -53,6 +63,20 @@ public class GameManager : MonoBehaviour
     public static bool IsPaused()
     {
         return currentGameState == GameState.pause;
+    }
+
+    public void NewRound()
+    {
+        currentGameState = GameState.game;
+        _endPanel.SetActive(false);
+        SceneManager.LoadScene(1);
+    }
+
+    public void EndRound()
+    {
+        _endPanel.SetActive(true);
+        foreach(Text text in _scoreEndText)
+            text.text = "FINAL SCORE:\n" + GlobalScore.GetScore();
     }
 
     [SerializeField] private Flock[] flocks;
