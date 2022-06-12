@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public static GameState currentGameState = GameState.game;
     [SerializeField] public GameObject _pausePanel;
     [SerializeField] public GameObject _endPanel;
-    [SerializeField] private Text[] _scoreEndText;
+    [SerializeField] private Text _scoreEndText;
     [SerializeField] private PlayerMain _player;
     public static List<Bullet> bullets = new List<Bullet>();
     static int _loadFile = -1;
@@ -75,8 +75,7 @@ public class GameManager : MonoBehaviour
     public void EndRound()
     {
         _endPanel.SetActive(true);
-        foreach(Text text in _scoreEndText)
-            text.text = "FINAL SCORE:\n" + GlobalScore.GetScore();
+        _scoreEndText.text = "FINAL SCORE:\n" + GlobalScore.GetScore();
     }
 
     [SerializeField] private Flock[] flocks;
@@ -190,18 +189,21 @@ public class GameManager : MonoBehaviour
         if (bullets.Count > 0)
             foreach (Bullet bullet in bullets)
             {
-                Vector3 _dir = (Vector3)bullet.direction;
+                if (bullet != null)
+                {
+                    Vector3 _dir = (Vector3)bullet.direction;
 
-                bulletData = bulletData
-                    + bullet.transform.position.ToString() + ":"   //0
-                + _dir.ToString() + ":" //1
-                + bullet.spd.ToString() + ":"     //2
-                + bullet.tag.ToString()        //3
-                + "~";
+                    bulletData = bulletData
+                        + bullet.transform.position.ToString() + ":"   //0
+                    + _dir.ToString() + ":" //1
+                    + bullet.spd.ToString() + ":"     //2
+                    + bullet.tag.ToString()        //3
+                    + "~";
+                }
             }
 
         if (bulletData.Length > 1)
-        bulletData = bulletData.Remove(bulletData.Length - 1);
+            bulletData = bulletData.Remove(bulletData.Length - 1);
 
         return bulletData;
     }
