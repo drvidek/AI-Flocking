@@ -32,16 +32,18 @@ public class Flock : MonoBehaviour
 
     public float SquareAvoidanceRadius { get { return _squareAvoidanceRadius; } }
 
+    [SerializeField] private GameObject[] _warningIcons;
+
 
     private void Start()
     {
-        SpawnAgents(spawnCount);
+        int i = GetSpawnLocation(false);
+        SpawnAgents(i, spawnCount);
     }
 
-    void SpawnAgents(int count)
+    void SpawnAgents(int index, int count)
     {
-        int spawnIndex = Random.Range(0, spawnPoints.Count);
-        Transform _spawnpoint = spawnPoints[spawnIndex];
+        Transform _spawnpoint = spawnPoints[index];
         for (int i = 0; i < count; i++)
         {
             FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
@@ -56,14 +58,27 @@ public class Flock : MonoBehaviour
         }
     }
 
+    int GetSpawnLocation(bool random)
+    {
+        int i;
+        if (random)
+            i = Random.Range(0, spawnPoints.Count);
+        else
+            i = 0;
+        return i;
+    }
+
     private void Update()
     {
-        if (!GameManager.IsPaused())
+        if (GameManager.IsPlaying())
         {
             if (agents.Count == 0)
             {
                 spawnCount = (int)Mathf.Round((float)spawnCount * spawnIncrease);
-                SpawnAgents(spawnCount);
+                int i = GetSpawnLocation(true);
+                SpawnAgents(i, spawnCount);
+                Animator animator = _warningIcons[i].GetComponentInChildren<Animator>();
+                animator.SetTrigger("Flash");
             }
             else
                 foreach (FlockAgent agent in agents)
@@ -109,13 +124,13 @@ public class Flock : MonoBehaviour
 
         bool _first = true;
 
-        foreach(FlockAgent agent in agents)
+        foreach (FlockAgent agent in agents)
         {
             //first entry doesn't need a ~ to start
             if (_first)
                 data = data + agent.transform.position + ":" + agent.transform.up + ":" + agent.Health;
             else
-            data = data + "~" + agent.transform.position + ":" + agent.transform.up + ":" + agent.Health;
+                data = data + "~" + agent.transform.position + ":" + agent.transform.up + ":" + agent.Health;
             _first = false;
         }
 
@@ -128,7 +143,7 @@ public class Flock : MonoBehaviour
         for (int i = 0; i < loadAgents.Length; i++)
         {
             string[] agentTransform = loadAgents[i].Split(':');
-            
+
             FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
                 agentPrefab, // this is the prefab
                 transform

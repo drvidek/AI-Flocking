@@ -12,6 +12,8 @@ public class FlockAgent : CombatAgent
     public ContextFilter filter;
     public Collider2D AgentCollider { get => _agentCollider; }
 
+    private bool _hasSpawned;
+
     private List<Vector2> _pointDir = new List<Vector2>();
 
     [SerializeField] private AudioSource _hitSound;
@@ -42,7 +44,10 @@ public class FlockAgent : CombatAgent
         transform.up = _pointDirAverage.normalized; //rotate the AI
         transform.position += (Vector3)velocity * Time.deltaTime; //move the AI
 
-        ScreenWrap();
+        if (_hasSpawned)
+            ScreenWrap();
+        else
+            _hasSpawned = _spriteRenderer.isVisible;
     }
 
     public override void TakeDamage(float hit)

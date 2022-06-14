@@ -30,6 +30,7 @@ public class PlayerMain : CombatAgent
     [SerializeField] private Image _boostImage;
     [SerializeField] private ParticleSystem _pingPartSys;
     [SerializeField] private ParticleSystem _thrustPartSys;
+    [SerializeField] private ParticleSystem _subThrustPartSys;
     [SerializeField] private ParticleSystem _boostPartSys;
     [SerializeField] private AudioSource _boostRegenSfx;
     bool _boostPartDone;
@@ -39,13 +40,15 @@ public class PlayerMain : CombatAgent
         base.Start();
         HandleKeybindFile.ReadSaveFile();
         _myCollider = GetComponent<Collider2D>();
+        ParticleSystem[] myThrust = _thrustPartSys.GetComponentsInChildren<ParticleSystem>();
+        _subThrustPartSys = myThrust[1];
         _boostPartDone = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.IsPaused())
+        if (GameManager.IsPlaying())
         {
             _boostDelay = MathExt.Approach(_boostDelay, 0, Time.deltaTime);
 
@@ -79,6 +82,11 @@ public class PlayerMain : CombatAgent
                 _myVelocity = Vector2.zero;
                 _spriteRenderer.enabled = false;
                 _myCollider.enabled = false;
+                if (_thrustPartSys.isPlaying)
+                {
+                    _thrustPartSys.Stop();
+                    _subThrustPartSys.Stop();
+                }
             }
 
             Move((Vector3)_myVelocity * Time.deltaTime);
@@ -94,6 +102,10 @@ public class PlayerMain : CombatAgent
                 _myVelocity.x = MathExt.Approach(_myVelocity.x, 0, _fric * Time.deltaTime);
                 _myVelocity.y = MathExt.Approach(_myVelocity.y, 0, _fric * Time.deltaTime);
             }
+
+            var main = _subThrustPartSys.main;
+            float _thrustRot = transform.localEulerAngles.z *-1f;
+            main.startRotation = _thrustRot * Mathf.Deg2Rad;
 
             ScreenWrap();
         }
@@ -128,12 +140,15 @@ public class PlayerMain : CombatAgent
 
     Vector2 Thrust()
     {
-        if (ThrustButton())
+        if (ThrustButton() && !_dead)
         {
             _spdAccelCurrent += _spdAccel * Time.deltaTime;
             _spdCurrent = MathExt.Approach(_spdCurrent, _spdMax, _spdAccelCurrent * Time.deltaTime);
             if (_thrustPartSys.isStopped)
+            {
                 _thrustPartSys.Play();
+                _subThrustPartSys.Play();
+            }
             return (Vector2)transform.up * _spdCurrent * Time.deltaTime;
 
         }
@@ -142,7 +157,10 @@ public class PlayerMain : CombatAgent
             _spdCurrent = 0f;
             _spdAccelCurrent = 0f;
             if (_thrustPartSys.isPlaying)
+            {
                 _thrustPartSys.Stop();
+                _subThrustPartSys.Stop();
+            }
             return Vector2.zero;
         }
     }

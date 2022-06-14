@@ -102,6 +102,8 @@ public static class HandleGameSaveFile
         }
         else loadString = new string[0];
 
+        Debug.Log(loadString.Length +"/" + loadString[0]);
+
         return loadString;
     }
 

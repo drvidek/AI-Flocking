@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyGun : MasterGun
 {
     [SerializeField] private Transform _player;
-    [SerializeField] private FlockAgent _myEnemy;
     [SerializeField] private Transform _myGun;
 
     // Start is called before the first frame update
@@ -14,7 +13,6 @@ public class EnemyGun : MasterGun
         base.Start();
         _shotDelay = _shotDelayMax;
         _player = GameObject.Find("Player").transform;
-        _myEnemy = GetComponentInParent<FlockAgent>();
     }
 
     new void Update()
@@ -26,7 +24,7 @@ public class EnemyGun : MasterGun
 
     protected override bool Shoot()
     {
-        if (_shotDelay == 0)
+        if (_shotDelay == 0 && _owner._SpriteRend.isVisible)
         {
             int i = Random.Range(0, 3);
             if (i != 0)

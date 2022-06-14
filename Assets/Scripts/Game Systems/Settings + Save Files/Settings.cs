@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using System.IO;
 
 public class Settings : MonoBehaviour
 {
@@ -11,8 +10,6 @@ public class Settings : MonoBehaviour
 
 
     #region Saving and Loading
-    static string path = Path.Combine(Application.streamingAssetsPath, "Options/Settings.txt");
-
     public Slider[] sliders;
     public Toggle[] toggles;
     public Dropdown[] dropdowns;
@@ -24,7 +21,67 @@ public class Settings : MonoBehaviour
 
     public void ReadSettings(bool apply)
     {
-        HandleSettingsFile.ReadSaveFile(this, apply);
+        List<string> settings = HandleSettingsFile.ReadSaveFile(false);
+        SetSettings(settings, apply);
+    }
+
+    public void DefaultSettings()
+    {
+        List<string> settings = HandleSettingsFile.ReadSaveFile(true);
+        SetSettings(settings,true);
+    }
+
+    public void SetSettings(List<string> settings, bool apply)
+    {
+        for (int i = 0; i < sliders.Length; i++)
+        {
+            sliders[i].value = float.Parse(settings[i]);
+            if (apply)
+            {
+                string thisSlider = sliders[i].name;
+                CurrentSlider(thisSlider);
+                ChangeVolume(sliders[i].value);
+            }
+        }
+
+        for (int i = 0; i < toggles.Length; i++)
+        {
+            bool muted = bool.Parse(settings[i + sliders.Length]);
+            toggles[i].isOn = muted;
+            if (i < sliders.Length)
+            {
+                sliders[i].interactable = !muted;
+                if (apply && muted)
+                {
+                    string thisSlider = sliders[i].name;
+                    CurrentSlider(thisSlider);
+                    ChangeVolume(-80f);
+                }
+            }
+            else
+            {
+                if (apply)
+                    FullscreenToggle(muted);
+            }
+
+        }
+
+        for (int i = 0; i < dropdowns.Length; i++)
+        {
+            dropdowns[i].value = int.Parse(settings[i + sliders.Length + toggles.Length]);
+            if (apply)
+            {
+                if (i == 0)
+                {
+                    Quality(dropdowns[i].value);
+                }
+                else
+                {
+                    SetResolution(dropdowns[i].value);
+                }
+            }
+            dropdowns[i].RefreshShownValue();
+        }
     }
     #endregion
 
@@ -124,8 +181,6 @@ public class Settings : MonoBehaviour
         resDropdown.value = currentResolutionIndex;
         resDropdown.RefreshShownValue();
         #endregion
-
-        //read the settings file, apply the settings to the screen, and apply the settings to the game on first boot
         ReadSettings(!firstBootDone);
 
         firstBootDone = true;

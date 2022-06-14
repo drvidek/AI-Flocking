@@ -63,7 +63,7 @@ public abstract class MasterGun : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (!GameManager.IsPaused())
+        if (GameManager.IsPlaying())
         {
             if (Shoot())
             {

@@ -10,6 +10,7 @@ public abstract class CombatAgent : MonoBehaviour
     [SerializeField] protected float _health;
     public float Health { get { return _health; } set { _health = value; } }
     [SerializeField] protected SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _SpriteRend { get { return _spriteRenderer; } }
     [SerializeField] protected Color _hitEffectCol;
     [SerializeField] protected Color _homeCol;
     public GameObject _deathPartSys;
@@ -34,6 +35,7 @@ public abstract class CombatAgent : MonoBehaviour
 
     virtual public void TakeDamage(float hit)
     {
+        if (_spriteRenderer.isVisible)
         _health -= hit;
         if (_health <= 0)
         {

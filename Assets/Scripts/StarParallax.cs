@@ -35,7 +35,7 @@ public class StarParallax : MonoBehaviour
 
     public void MoveWithPlayer()
     {
-        float _finalParallaxScale = GameManager.IsPaused() ? _parallaxScale/2f : _parallaxScale;
+        float _finalParallaxScale = GameManager.IsPlaying() ? _parallaxScale : _parallaxScale/2f;
         transform.position -= (Vector3)_player.Velocity * Time.deltaTime * _finalParallaxScale;
     }
 

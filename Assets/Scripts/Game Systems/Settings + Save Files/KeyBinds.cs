@@ -26,7 +26,7 @@ public class KeyBinds : MonoBehaviour
     void Start()
     {
         HandleKeybindFile.ReadSaveFile();
-        if (!PlayerPrefs.HasKey("FirstLoad"))
+        if (!PlayerPrefs.HasKey("FirstLoad") || keys.Count < baseSetup.Length)
         {
             DefaultKeyBinds();
         }
@@ -48,14 +48,17 @@ public class KeyBinds : MonoBehaviour
         {
             //add key according to the saved string
             keys.Add(baseSetup[i].keyName, (KeyCode)System.Enum.Parse(typeof(KeyCode), baseSetup[i].defaultKey));
+            baseSetup[i].keyDisplayText.text = baseSetup[i].defaultKey;
+            //change the colour of the button to blue
+            baseSetup[i].buttonObject.GetComponent<Image>().color = cWhite;
         }
         HandleKeybindFile.WriteSaveFile();
-        PlayerPrefs.SetString("FirstLoad","");
+        PlayerPrefs.SetString("FirstLoad", "");
     }
 
     public void SaveKeys()
     {
-       HandleKeybindFile.WriteSaveFile();
+        HandleKeybindFile.WriteSaveFile();
     }
 
     public void ChangeKey(GameObject clickedKey)
@@ -67,7 +70,7 @@ public class KeyBinds : MonoBehaviour
             //forget the object we were editing
             currentKeyButton = null;
         }
-        
+
         currentKeyButton = clickedKey;
         //if we have a key selected
         if (clickedKey != null)

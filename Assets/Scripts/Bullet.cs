@@ -32,7 +32,7 @@ public class Bullet : MonoBehaviour
 
     protected void Update()
     {
-        if (!GameManager.IsPaused())
+        if (GameManager.IsPlaying())
         {
             Move();
             transform.Rotate(new Vector3(0, 0, 360) * Time.deltaTime);
@@ -81,7 +81,7 @@ public class Bullet : MonoBehaviour
 
     virtual protected bool Collision(Collider2D _hit)
     {
-        if (_hit.tag != tag)
+        if (_hit.tag != tag && _myRenderer.isVisible)
         {
             CombatAgent _hitAgent = _hit.GetComponent<CombatAgent>();
             Bullet _hitBullet = _hit.GetComponent<Bullet>();

@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject.Find("Player").TryGetComponent<PlayerMain>(out _player);
-        _endPanel.SetActive(false);
+        if (GameObject.Find("Player").TryGetComponent<PlayerMain>(out _player))
+            currentGameState = GameState.game;
 
         if (_loadFile != -1)
         {
@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static bool IsPaused()
+    public static bool IsPlaying()
     {
-        return currentGameState == GameState.pause;
+        return currentGameState == GameState.game;
     }
 
     public void NewRound()
@@ -128,7 +128,6 @@ public class GameManager : MonoBehaviour
             }
         }
         Debug.Log("Completed Load");
-
     }
 
     public void ParseParentArray(string[] loadFiles)
@@ -292,7 +291,10 @@ public class GameManager : MonoBehaviour
     {
         if (bullets.Count > 0)
             bullets.Clear();
+        if (sceneIndex > 0)
+            currentGameState = GameState.game;
         SceneManager.LoadScene(sceneIndex);
+        
     }
     public void QueueLoad(int file)
     {

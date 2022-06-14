@@ -11,7 +11,7 @@ public class ContinueButtonHandler : MonoBehaviour
     {
         ResetButtons();
         string[] files = HandleGameSaveFile.ReadContinueFile();
-        if (files[0] != null && files[0] != "")
+        if (files.Length > 0 && files[0] != "")
         {
             contButton.interactable = true;
         }
