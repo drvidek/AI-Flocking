@@ -8,6 +8,7 @@ public class ScorePopup : MonoBehaviour
     float _yDist = 0.5f;
     float _offsetMax = 2f;
     string _points;
+    Vector3 _dir;
 
     public string Points { set { _points = value; } }
 
@@ -17,6 +18,7 @@ public class ScorePopup : MonoBehaviour
     void Start()
     {
         myText = GetComponentsInChildren<Text>();
+        _dir = transform.position - GameObject.Find("Player").transform.position;
         StartCoroutine(Life());
     }
     
@@ -33,7 +35,7 @@ public class ScorePopup : MonoBehaviour
 
         while (_yDist > 0)
         {
-            transform.position += (Vector3)Vector2.up * _yDist;
+            transform.position += _dir.normalized * _yDist; //(Vector3)Vector2.up * _yDist;
             _yDist = MathExt.Approach(_yDist,0, Time.deltaTime);
             yield return null;
         }

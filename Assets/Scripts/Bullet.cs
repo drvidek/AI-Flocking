@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     public Vector2 direction;
     public float spd;
     public float scale;
-    public float power;
+    public float power = 1f;
     public Color color;
     [SerializeField] private SpriteRenderer _myRenderer;
     [SerializeField] private GameObject _deathPart;

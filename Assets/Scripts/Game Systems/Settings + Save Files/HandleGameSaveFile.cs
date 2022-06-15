@@ -45,25 +45,6 @@ public static class HandleGameSaveFile
         WriteContinueFile(savestring);
     }
 
-    [MenuItem("My Tools/Default savedata")]
-    public static void DefaultSaveFiles()
-    {
-        StreamWriter saveWrite = new StreamWriter(pathSave, false);
-
-        int i = 0;
-        while (i < saveSlots)
-        {
-            saveWrite.WriteLine("");
-            i++;
-        }
-        saveWrite.Close();
-
-        StreamWriter contWrite = new StreamWriter(pathContinue, false);
-        contWrite.WriteLine("");
-        contWrite.Close();
-        PlayerPrefs.DeleteKey("Firstload");
-    }
-
     public static void WriteContinueFile(string fileString)
     {
         StreamWriter saveWrite = new StreamWriter(pathContinue, false);

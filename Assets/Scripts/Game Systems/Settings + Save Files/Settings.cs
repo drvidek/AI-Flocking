@@ -68,7 +68,7 @@ public class Settings : MonoBehaviour
 
         for (int i = 0; i < dropdowns.Length; i++)
         {
-            dropdowns[i].value = int.Parse(settings[i + sliders.Length + toggles.Length]);
+            dropdowns[i].value = (settings[i + sliders.Length + toggles.Length] == "-1") ? resolutions.Count : int.Parse(settings[i + sliders.Length + toggles.Length]);
             if (apply)
             {
                 if (i == 0)

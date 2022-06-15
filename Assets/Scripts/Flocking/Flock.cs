@@ -144,12 +144,15 @@ public class Flock : MonoBehaviour
         {
             string[] agentTransform = loadAgents[i].Split(':');
 
+            Vector3 agentPos = MathExt.StringToVector3(agentTransform[0]);
+
             FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
                 agentPrefab, // this is the prefab
+                agentPos,
+                new Quaternion(0,0,0,0),
                 transform
                 );
 
-            newAgent.transform.position = MathExt.StringToVector3(agentTransform[0]);
             newAgent.transform.up = MathExt.StringToVector3(agentTransform[1]);
             newAgent.Health = float.Parse(agentTransform[2]);
             newAgent.name = "Agent " + i;

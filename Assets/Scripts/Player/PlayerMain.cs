@@ -12,7 +12,7 @@ public class PlayerMain : CombatAgent
     Collider2D _myCollider;
     public bool ShotFired { set { _shotFired = value; } }
     [SerializeField] private Vector2 _myVelocity;
-    public Vector2 Velocity { get { return _myVelocity; } set { _myVelocity = value ; } }
+    public Vector2 Velocity { get { return _myVelocity; } set { _myVelocity = value; } }
     float _boostDelay;
 
     [Header("Boost")]
@@ -104,7 +104,7 @@ public class PlayerMain : CombatAgent
             }
 
             var main = _subThrustPartSys.main;
-            float _thrustRot = transform.localEulerAngles.z *-1f;
+            float _thrustRot = transform.localEulerAngles.z * -1f;
             main.startRotation = _thrustRot * Mathf.Deg2Rad;
 
             ScreenWrap();
@@ -197,7 +197,7 @@ public class PlayerMain : CombatAgent
                 }
                 if (hit)
                 {
-                    StartCoroutine(EndOfLife());
+                    TakeDamage(5f);
                 }
             }
         }
@@ -219,11 +219,20 @@ public class PlayerMain : CombatAgent
         }
         else
             _comboReset = false;
-    } 
+    }
     #endregion
+
+    public override void TakeDamage(float hit)
+    {
+        if (!_boostActive)
+            base.TakeDamage(hit);
+        Debug.Log("Taken damage");
+    }
 
     protected override IEnumerator EndOfLife()
     {
+        Debug.Log("End of life");
+
         _dead = true;
 
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Player");

@@ -17,6 +17,7 @@ public class EnemyGun : MasterGun
 
     new void Update()
     {
+        if (Enemy.hasSpawned)
         base.Update();
 
         _myGun.up = (Vector2)(_player.position - _shotSpawnPoint.position).normalized;
@@ -24,7 +25,7 @@ public class EnemyGun : MasterGun
 
     protected override bool Shoot()
     {
-        if (_shotDelay == 0 && _owner._SpriteRend.isVisible)
+        if (_shotDelay == 0)
         {
             int i = Random.Range(0, 3);
             if (i != 0)

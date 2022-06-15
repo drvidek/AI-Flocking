@@ -46,56 +46,5 @@ public static class HandleSettingsFile
 
         return settings;
 
-        //for (int i = 0; i < settingsClass.sliders.Length; i++)
-        //{
-        //    settingsClass.sliders[i].value = float.Parse(saveRead.ReadLine());
-        //    if (apply)
-        //    {
-        //        string thisSlider = settingsClass.sliders[i].name;
-        //        settingsClass.CurrentSlider(thisSlider);
-        //        settingsClass.ChangeVolume(settingsClass.sliders[i].value);
-        //    }
-        //}
-
-        //for (int i = 0; i < settingsClass.toggles.Length; i++)
-        //{
-        //    bool muted = bool.Parse(saveRead.ReadLine());
-        //    settingsClass.toggles[i].isOn = muted;
-        //    if (i < settingsClass.sliders.Length)
-        //    {
-        //        settingsClass.sliders[i].interactable = !muted;
-        //        if (apply && muted)
-        //        {
-        //            string thisSlider = settingsClass.sliders[i].name;
-        //            settingsClass.CurrentSlider(thisSlider);
-        //            settingsClass.ChangeVolume(-80f);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (apply)
-        //            settingsClass.FullscreenToggle(muted);
-        //    }
-
-        //}
-
-        //for (int i = 0; i < settingsClass.dropdowns.Length; i++)
-        //{
-        //    settingsClass.dropdowns[i].value = int.Parse(saveRead.ReadLine());
-        //    if (apply)
-        //    {
-        //        if (i == 0)
-        //        {
-        //            settingsClass.Quality(settingsClass.dropdowns[i].value);
-        //        }
-        //        else
-        //        {
-        //            settingsClass.SetResolution(settingsClass.dropdowns[i].value);
-        //        }
-        //    }
-        //    settingsClass.dropdowns[i].RefreshShownValue();
-        //}
-
-
     }
 }

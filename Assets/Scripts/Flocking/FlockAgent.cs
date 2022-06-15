@@ -12,7 +12,7 @@ public class FlockAgent : CombatAgent
     public ContextFilter filter;
     public Collider2D AgentCollider { get => _agentCollider; }
 
-    private bool _hasSpawned;
+    public bool hasSpawned;
 
     private List<Vector2> _pointDir = new List<Vector2>();
 
@@ -44,10 +44,10 @@ public class FlockAgent : CombatAgent
         transform.up = _pointDirAverage.normalized; //rotate the AI
         transform.position += (Vector3)velocity * Time.deltaTime; //move the AI
 
-        if (_hasSpawned)
+        if (hasSpawned)
             ScreenWrap();
         else
-            _hasSpawned = _spriteRenderer.isVisible;
+            hasSpawned = _spriteRenderer.isVisible;
     }
 
     public override void TakeDamage(float hit)

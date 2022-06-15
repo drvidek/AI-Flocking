@@ -20,13 +20,15 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if (GameObject.Find("Player").TryGetComponent<PlayerMain>(out _player))
-            currentGameState = GameState.game;
 
         if (_loadFile != -1)
         {
             LoadGameFromFile(_loadFile);
             _loadFile = -1;
         }
+
+        currentGameState = GameState.game;
+
     }
 
     // Update is called once per frame
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour
     {
         currentGameState = GameState.game;
         _endPanel.SetActive(false);
+        bullets.Clear();
         SceneManager.LoadScene(1);
     }
 
