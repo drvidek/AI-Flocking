@@ -10,28 +10,45 @@ public class GameManager : MonoBehaviour
     [SerializeField] public static GameState currentGameState = GameState.game;
     [SerializeField] public GameObject _pausePanel;
     [SerializeField] public GameObject _endPanel;
+    [SerializeField] public GameObject _highscoreInput;
     [SerializeField] private Text _scoreEndText;
+    [SerializeField] private Text _highscoreNames;
+    [SerializeField] private Text _highscorePoints;
     [SerializeField] private Text _countdownText;
     [SerializeField] private PlayerMain _player;
     public static List<Bullet> bullets = new List<Bullet>();
     static int _loadFile = -1;
     public static string bulletPrefabPath = "Prefabs/Bullet";
-
+    private static bool _firstBoot = true;
+    private bool _roundOver;
+    private int _newHighScore = -1;
 
     private void Start()
     {
-        if (GameObject.Find("Player").TryGetComponent<PlayerMain>(out _player))
-
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            _player = GameObject.Find("Player").GetComponent<PlayerMain>();
             if (_loadFile != -1)
             {
                 LoadGameFromFile(_loadFile);
                 _loadFile = -1;
             }
-
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
             StartCoroutine(Countdown());
         }
+
+        if (_firstBoot)
+        {
+            if (!PlayerPrefs.HasKey("FirstLoadScores"))
+            {
+                GlobalScore.DefaultHighscores();
+                GlobalScore.SaveHighScores();
+                PlayerPrefs.SetString("FirstLoadScores", "");
+            }
+            else
+            GlobalScore.LoadHighScores();
+        }
+
+        _firstBoot = false;
     }
 
     IEnumerator Countdown()
@@ -60,7 +77,7 @@ public class GameManager : MonoBehaviour
             TogglePause();
         }
 
-        if (currentGameState == GameState.postgame)
+        if (currentGameState == GameState.postgame && !_roundOver)
         {
             EndRound();
         }
@@ -91,14 +108,45 @@ public class GameManager : MonoBehaviour
     public void NewRound()
     {
         _endPanel.SetActive(false);
+        _roundOver = false;
+        currentGameState = GameState.pregame;
         bullets.Clear();
         SceneManager.LoadScene(1);
     }
 
     public void EndRound()
     {
+        _roundOver = true;
         _endPanel.SetActive(true);
         _scoreEndText.text = "FINAL SCORE:\n" + GlobalScore.GetScore();
+        _newHighScore = GlobalScore.AddHighScore("NEW", int.Parse(GlobalScore.GetScore()));
+        _highscoreInput.SetActive(_newHighScore < GlobalScore.MaxHighScores);
+        SetHighScores();
+    }
+
+    public void UpdateHighScoreName(string name)
+    {
+        if (_newHighScore < GlobalScore.MaxHighScores)
+        GlobalScore.HighScoreNames[_newHighScore] = name;
+        SetHighScores();
+    }
+
+    public void SetHighScores()
+    {
+        string names = "";
+        string points = "";
+        for (int i = 0; i < GlobalScore.MaxHighScores; i++)
+        {
+            names += (i < GlobalScore.HighScoreNames.Count) ? GlobalScore.HighScoreNames[i] : "---";
+            points += (i < GlobalScore.HighScorePoints.Count) ? GlobalScore.HighScorePoints[i].ToString() : "---";
+            if (i < GlobalScore.MaxHighScores - 1)
+            {
+                names += "\n";
+                points += "\n";
+            }
+        }
+        _highscoreNames.text = names;
+        _highscorePoints.text = points;
     }
 
     [SerializeField] private Flock[] flocks;
@@ -327,6 +375,7 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        GlobalScore.SaveHighScores();
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

@@ -101,4 +101,15 @@ public class ScoreKeeper : MonoBehaviour
         float _fill = _comboMeter / _comboMeterMax;
         _comboBar.fillAmount = MathExt.Approach(_comboBar.fillAmount, _fill, Time.deltaTime);
     }
+
+    public bool CheckHighscore()
+    {
+        return false;
+    }
+
+    public void AddHighscore(string playerName, int score)
+    {
+
+    }
+
 }

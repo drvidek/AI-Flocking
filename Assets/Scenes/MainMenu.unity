@@ -1241,6 +1241,7 @@ MonoBehaviour:
   _pausePanel: {fileID: 0}
   _endPanel: {fileID: 0}
   _scoreEndText: {fileID: 0}
+  _countdownText: {fileID: 0}
   _player: {fileID: 0}
   flocks: []
 --- !u!1 &945191510
@@ -1911,10 +1912,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
-    - target: {fileID: 2402353641318585757, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2402353641783072463, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1958,10 +1955,6 @@ PrefabInstance:
     - target: {fileID: 2402353641796054643, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2402353641859641383, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -1.8900757
       objectReference: {fileID: 0}
     - target: {fileID: 2402353641974717052, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2135,10 +2128,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2402353642456233718, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -5.200012
-      objectReference: {fileID: 0}
     - target: {fileID: 2402353642477340708, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2210,10 +2199,6 @@ PrefabInstance:
     - target: {fileID: 2402353642691207690, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2402353642759883506, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.1899414
       objectReference: {fileID: 0}
     - target: {fileID: 2402353642927018736, guid: f4f4b6008468c534b9c9d4f85729379e, type: 3}
       propertyPath: m_FontData.m_Font

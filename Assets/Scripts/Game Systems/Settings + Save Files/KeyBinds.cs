@@ -26,7 +26,7 @@ public class KeyBinds : MonoBehaviour
     void Start()
     {
         HandleKeybindFile.ReadSaveFile();
-        if (!PlayerPrefs.HasKey("FirstLoad") || keys.Count < baseSetup.Length)
+        if (!PlayerPrefs.HasKey("FirstLoadKeys") || keys.Count < baseSetup.Length)
         {
             DefaultKeyBinds();
         }
@@ -53,7 +53,7 @@ public class KeyBinds : MonoBehaviour
             baseSetup[i].buttonObject.GetComponent<Image>().color = cWhite;
         }
         HandleKeybindFile.WriteSaveFile();
-        PlayerPrefs.SetString("FirstLoad", "");
+        PlayerPrefs.SetString("FirstLoadKeys", "");
     }
 
     public void SaveKeys()

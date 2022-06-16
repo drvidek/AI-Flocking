@@ -8,7 +8,6 @@ public class Settings : MonoBehaviour
 {
     private static bool firstBootDone;
 
-
     #region Saving and Loading
     public Slider[] sliders;
     public Toggle[] toggles;
@@ -19,19 +18,41 @@ public class Settings : MonoBehaviour
         HandleSettingsFile.WriteSaveFile(this);
     }
 
-    public void ReadSettings(bool apply)
+    public void LoadSettingsFromFile(bool apply)
     {
         List<string> settings = HandleSettingsFile.ReadSaveFile(false);
-        SetSettings(settings, apply);
+        SetSettingsFromLoad(settings, apply);
     }
 
+    #region Defaults
     public void DefaultSettings()
     {
         List<string> settings = HandleSettingsFile.ReadSaveFile(true);
-        SetSettings(settings,true);
+        SetSettingsFromLoad(settings, true);
     }
 
-    public void SetSettings(List<string> settings, bool apply)
+    public void DefaultAudioSettings()
+    {
+        List<string> settings = HandleSettingsFile.ReadSaveFile(true);
+        SetSettingsFromLoad(settings, true, true, false);
+    }
+
+    public void DefaultVideoSettings()
+    {
+        List<string> settings = HandleSettingsFile.ReadSaveFile(true);
+        SetSettingsFromLoad(settings, true, false, true);
+    } 
+    #endregion
+
+    public void SetSettingsFromLoad(List<string> settings, bool apply, bool audio = true, bool video = true)
+    {
+        if (audio)
+            SetAudioFromLoad(settings, apply);
+        if (video)
+            SetVideoFromLoad(settings, apply);
+    }
+
+    public void SetAudioFromLoad(List<string> settings, bool apply)
     {
         for (int i = 0; i < sliders.Length; i++)
         {
@@ -44,27 +65,28 @@ public class Settings : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < toggles.Length; i++)
+        for (int i = 0; i < toggles.Length - 1; i++)
         {
             bool muted = bool.Parse(settings[i + sliders.Length]);
             toggles[i].isOn = muted;
-            if (i < sliders.Length)
+            sliders[i].interactable = !muted;
+            if (apply && muted)
             {
-                sliders[i].interactable = !muted;
-                if (apply && muted)
-                {
-                    string thisSlider = sliders[i].name;
-                    CurrentSlider(thisSlider);
-                    ChangeVolume(-80f);
-                }
+                string thisSlider = sliders[i].name;
+                CurrentSlider(thisSlider);
+                ChangeVolume(-80f);
             }
-            else
-            {
-                if (apply)
-                    FullscreenToggle(muted);
-            }
-
         }
+    }
+
+    public void SetVideoFromLoad(List<string> settings, bool apply)
+    {
+        bool toggle = bool.Parse(settings[sliders.Length + toggles.Length - 1]);
+        toggles[toggles.Length-1].isOn = toggle;
+
+        if (apply)
+            FullscreenToggle(toggle);
+
 
         for (int i = 0; i < dropdowns.Length; i++)
         {
@@ -83,8 +105,9 @@ public class Settings : MonoBehaviour
             dropdowns[i].RefreshShownValue();
         }
     }
-    #endregion
 
+
+    #endregion
 
     #region Audio
     public AudioMixer masterAudio;
@@ -181,7 +204,14 @@ public class Settings : MonoBehaviour
         resDropdown.value = currentResolutionIndex;
         resDropdown.RefreshShownValue();
         #endregion
-        ReadSettings(!firstBootDone);
+
+        if (!PlayerPrefs.HasKey("FirstLoadSettings"))
+        {
+            DefaultSettings();
+            PlayerPrefs.SetString("FirstLoadSettings", "");
+        }
+        else
+            LoadSettingsFromFile(!firstBootDone);
 
         firstBootDone = true;
     }

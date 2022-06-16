@@ -24,6 +24,9 @@ public static class DefaultSaveData
         StreamWriter contWrite = new StreamWriter(pathContinue, false);
         contWrite.WriteLine("");
         contWrite.Close();
-        PlayerPrefs.DeleteKey("Firstload");
+
+        PlayerPrefs.DeleteKey("FirstLoadKeys");
+        PlayerPrefs.DeleteKey("FirstLoadSettings");
+        PlayerPrefs.DeleteKey("FirstLoadScores");
     }
 }
