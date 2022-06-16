@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject _pausePanel;
     [SerializeField] public GameObject _endPanel;
     [SerializeField] private Text _scoreEndText;
+    [SerializeField] private Text _countdownText;
     [SerializeField] private PlayerMain _player;
     public static List<Bullet> bullets = new List<Bullet>();
     static int _loadFile = -1;
@@ -21,14 +22,34 @@ public class GameManager : MonoBehaviour
     {
         if (GameObject.Find("Player").TryGetComponent<PlayerMain>(out _player))
 
-        if (_loadFile != -1)
+            if (_loadFile != -1)
+            {
+                LoadGameFromFile(_loadFile);
+                _loadFile = -1;
+            }
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            LoadGameFromFile(_loadFile);
-            _loadFile = -1;
+            StartCoroutine(Countdown());
         }
+    }
 
+    IEnumerator Countdown()
+    {
+        currentGameState = GameState.pregame;
+        _countdownText.enabled = true;
+        _countdownText.GetComponent<Animator>().SetBool("Pulse", true);
+        float countdownTime = 3f;
+        while (countdownTime > 0)
+        {
+            _countdownText.text = Mathf.Ceil(countdownTime).ToString();
+            countdownTime = MathExt.Approach(countdownTime, 0, Time.deltaTime * 2);
+            yield return null;
+        }
         currentGameState = GameState.game;
-
+        _countdownText.GetComponent<Animator>().SetBool("Pulse", false);
+        _countdownText.enabled = false;
+        yield return null;
     }
 
     // Update is called once per frame
@@ -56,7 +77,7 @@ public class GameManager : MonoBehaviour
             }
             else if (currentGameState == GameState.pause && _pausePanel.activeSelf)
             {
-                currentGameState = GameState.game;
+                StartCoroutine(Countdown());
                 _pausePanel.SetActive(false);
             }
         }
@@ -69,7 +90,6 @@ public class GameManager : MonoBehaviour
 
     public void NewRound()
     {
-        currentGameState = GameState.game;
         _endPanel.SetActive(false);
         bullets.Clear();
         SceneManager.LoadScene(1);
@@ -297,7 +317,7 @@ public class GameManager : MonoBehaviour
         if (sceneIndex > 0)
             currentGameState = GameState.game;
         SceneManager.LoadScene(sceneIndex);
-        
+
     }
     public void QueueLoad(int file)
     {
