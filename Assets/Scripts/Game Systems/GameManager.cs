@@ -107,8 +107,6 @@ public class GameManager : MonoBehaviour
 
     public void NewRound()
     {
-        _endPanel.SetActive(false);
-        _roundOver = false;
         currentGameState = GameState.pregame;
         bullets.Clear();
         SceneManager.LoadScene(1);
@@ -147,6 +145,12 @@ public class GameManager : MonoBehaviour
         }
         _highscoreNames.text = names;
         _highscorePoints.text = points;
+    }
+
+    public void DefaultHighScores()
+    {
+        GlobalScore.DefaultHighscores();
+        SetHighScores();
     }
 
     [SerializeField] private Flock[] flocks;
