@@ -43,9 +43,13 @@ public class ScoreKeeper : MonoBehaviour
         int _pointWorth = points * _combo;
         _score += _pointWorth;
         UpdateScoreText();
-        GameObject popupPrefab = Resources.Load(scorePopupPath) as GameObject;
-        ScorePopup _popup = Instantiate(popupPrefab, new Vector3(position.x,position.y,-2), new Quaternion(0,0,0,0)).GetComponent<ScorePopup>();
-        _popup.Points = _pointWorth.ToString();
+
+        if (Settings.showScorePopup)
+        {
+            GameObject popupPrefab = Resources.Load(scorePopupPath) as GameObject;
+            ScorePopup _popup = Instantiate(popupPrefab, new Vector3(position.x, position.y, -2), new Quaternion(0, 0, 0, 0)).GetComponent<ScorePopup>();
+            _popup.Points = _pointWorth.ToString();
+        }
     }
 
     public void IncreaseComboMeter(float amount)
@@ -100,16 +104,6 @@ public class ScoreKeeper : MonoBehaviour
     {
         float _fill = _comboMeter / _comboMeterMax;
         _comboBar.fillAmount = MathExt.Approach(_comboBar.fillAmount, _fill, Time.deltaTime);
-    }
-
-    public bool CheckHighscore()
-    {
-        return false;
-    }
-
-    public void AddHighscore(string playerName, int score)
-    {
-
     }
 
 }

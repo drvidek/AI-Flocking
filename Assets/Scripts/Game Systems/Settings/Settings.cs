@@ -13,6 +13,9 @@ public class Settings : MonoBehaviour
     public Toggle[] toggles;
     public Dropdown[] dropdowns;
 
+    private int fullscreenToggle = 3;
+    private int scorePopupToggle = 4;
+
     public void SaveSettings()
     {
         HandleSettingsFile.WriteSaveFile(this);
@@ -21,35 +24,40 @@ public class Settings : MonoBehaviour
     public void LoadSettingsFromFile(bool apply)
     {
         List<string> settings = HandleSettingsFile.ReadSaveFile(false);
-        SetSettingsFromLoad(settings, apply);
+        SetAllSettingsFromLoad(settings, apply);
     }
 
     #region Defaults
     public void DefaultSettings()
     {
         List<string> settings = HandleSettingsFile.ReadSaveFile(true);
-        SetSettingsFromLoad(settings, true);
+        SetAllSettingsFromLoad(settings, true);
     }
 
     public void DefaultAudioSettings()
     {
         List<string> settings = HandleSettingsFile.ReadSaveFile(true);
-        SetSettingsFromLoad(settings, true, true, false);
+        SetAudioFromLoad(settings, true);
     }
 
     public void DefaultVideoSettings()
     {
         List<string> settings = HandleSettingsFile.ReadSaveFile(true);
-        SetSettingsFromLoad(settings, true, false, true);
-    } 
+        SetVideoFromLoad(settings, true);
+    }
+
+    public void DefaultGameplaySettings()
+    {
+        List<string> settings = HandleSettingsFile.ReadSaveFile(true);
+        SetGameplayFromLoad(settings, true);
+    }
     #endregion
 
-    public void SetSettingsFromLoad(List<string> settings, bool apply, bool audio = true, bool video = true)
+    public void SetAllSettingsFromLoad(List<string> settings, bool apply)
     {
-        if (audio)
-            SetAudioFromLoad(settings, apply);
-        if (video)
-            SetVideoFromLoad(settings, apply);
+        SetAudioFromLoad(settings, apply);
+        SetVideoFromLoad(settings, apply);
+        SetGameplayFromLoad(settings, apply);
     }
 
     public void SetAudioFromLoad(List<string> settings, bool apply)
@@ -65,7 +73,7 @@ public class Settings : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < toggles.Length - 1; i++)
+        for (int i = 0; i < fullscreenToggle; i++)
         {
             bool muted = bool.Parse(settings[i + sliders.Length]);
             toggles[i].isOn = muted;
@@ -81,8 +89,8 @@ public class Settings : MonoBehaviour
 
     public void SetVideoFromLoad(List<string> settings, bool apply)
     {
-        bool toggle = bool.Parse(settings[sliders.Length + toggles.Length - 1]);
-        toggles[toggles.Length-1].isOn = toggle;
+        bool toggle = bool.Parse(settings[sliders.Length + fullscreenToggle]);
+        toggles[fullscreenToggle].isOn = toggle;
 
         if (apply)
             FullscreenToggle(toggle);
@@ -106,6 +114,14 @@ public class Settings : MonoBehaviour
         }
     }
 
+    public void SetGameplayFromLoad(List<string> settings, bool apply)
+    {
+        bool toggle = bool.Parse(settings[sliders.Length + scorePopupToggle]);
+        toggles[scorePopupToggle].isOn = toggle;
+
+        if (apply)
+            ScorePopupToggle(toggle);
+    }
 
     #endregion
 
@@ -172,6 +188,15 @@ public class Settings : MonoBehaviour
     }
 
     #endregion
+
+    #region Game options
+    public static bool showScorePopup = true;
+    public void ScorePopupToggle(bool toggle)
+    {
+        showScorePopup = toggle;
+    }
+    #endregion
+
     private void Start()
     {
         #region Resolution
@@ -211,7 +236,8 @@ public class Settings : MonoBehaviour
             PlayerPrefs.SetString("FirstLoadSettings", "");
         }
         else
-            LoadSettingsFromFile(!firstBootDone);
+            if (!firstBootDone)
+            LoadSettingsFromFile(true);
 
         firstBootDone = true;
     }

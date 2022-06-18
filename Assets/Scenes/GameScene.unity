@@ -8352,7 +8352,7 @@ MonoBehaviour:
   _spdMax: 35
   _spdCurrent: 0
   _spdAccelCurrent: 0
-  _spdAccel: 35
+  _spdAccel: 50
   _fric: 10
   _turnSpd: 250
   _recoil: 1
@@ -15137,7 +15137,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1950853348}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: ReadSettings
+        m_MethodName: LoadSettingsFromFile
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
