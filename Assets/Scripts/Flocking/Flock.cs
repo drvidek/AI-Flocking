@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Flock : MonoBehaviour
 {
     public FlockAgent agentPrefab;
     public List<FlockAgent> agents;// = new List<FlockAgent>();
-
+    public ObjectPool<FlockAgent> agentPool;
     public FlockBehaviour behavior;
 
     [Range(1, 500)]
     public int spawnCount = 250;
+    public int spawnMax = 50;
     public float agentDensity = 0.08f;
 
     [Range(1f, 100f)]
@@ -23,6 +25,8 @@ public class Flock : MonoBehaviour
     public float avoidanceRadiusMultiplier = 0.5f;
 
     public float spawnIncrease = 1f;
+
+    public Transform agentPoolLoc;
 
     public List<Transform> spawnPoints;
 
@@ -38,6 +42,25 @@ public class Flock : MonoBehaviour
     private void Start()
     {
         int i = GetSpawnLocation(false);
+
+        agentPool = new ObjectPool<FlockAgent>(() =>
+            {
+                return Instantiate(agentPrefab, agentPoolLoc.position, Quaternion.Euler(Vector3.forward * Random.Range(0, 360f)), transform).GetComponent<FlockAgent>();
+            }, newAgent =>
+            {
+                newAgent.gameObject.SetActive(true);
+                newAgent.Initialise(this);
+                agents.Add(newAgent);
+            }, newAgent =>
+            {
+                newAgent.AgentCollider.enabled = false;
+                newAgent.transform.position = agentPoolLoc.position;
+                newAgent.gameObject.SetActive(false);
+            }, newAgent =>
+             {
+                 Destroy(newAgent.gameObject);
+             }, false, spawnMax
+            );
         SpawnAgents(i, spawnCount);
     }
 
@@ -46,17 +69,12 @@ public class Flock : MonoBehaviour
         Transform _spawnpoint = spawnPoints[index];
         for (int i = 0; i < count; i++)
         {
-            FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
-                agentPrefab, // this is the prefab
-                _spawnpoint.position + (Vector3)(Random.insideUnitCircle * spawnCount * agentDensity),
-                Quaternion.Euler(Vector3.forward * Random.Range(0, 360f)),
-                transform
-                );
-            newAgent.name = "Agent " + i;
-            newAgent.Initialise(this);
-            agents.Add(newAgent);
+            FlockAgent newAgent = agentPool.Get();
+            newAgent.transform.position = _spawnpoint.position + (Vector3)(Random.insideUnitCircle * spawnCount * agentDensity);
+            newAgent.AgentCollider.enabled = true;
         }
     }
+
 
     int GetSpawnLocation(bool random)
     {
@@ -74,7 +92,7 @@ public class Flock : MonoBehaviour
         {
             if (agents.Count == 0)
             {
-                spawnCount = (int)Mathf.Round((float)spawnCount * spawnIncrease);
+                spawnCount = Mathf.Min((int)Mathf.Round((float)spawnCount * spawnIncrease), spawnMax);
                 int i = GetSpawnLocation(true);
                 SpawnAgents(i, spawnCount);
                 Animator animator = _warningIcons[i].GetComponentInChildren<Animator>();
@@ -149,7 +167,7 @@ public class Flock : MonoBehaviour
             FlockAgent newAgent = Instantiate( //creates a clone of gameobject or prefab
                 agentPrefab, // this is the prefab
                 agentPos,
-                new Quaternion(0,0,0,0),
+                new Quaternion(0, 0, 0, 0),
                 transform
                 );
 

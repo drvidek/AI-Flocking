@@ -229,7 +229,7 @@ public class PlayerMain : CombatAgent
         Debug.Log("Taken damage");
     }
 
-    protected override IEnumerator EndOfLife()
+    protected override void EndOfLife()
     {
         Debug.Log("End of life");
 
@@ -243,7 +243,12 @@ public class PlayerMain : CombatAgent
                 Destroy(item);
             }
         }
+        StartCoroutine(EndRound());
 
+    }
+
+    IEnumerator EndRound()
+    {
         ParticleSystem partSys = CreateDeathParticles();
         partSys.gameObject.transform.localScale = partSys.gameObject.transform.localScale * 3;
         yield return new WaitForSeconds(partSys.main.duration * 2f);

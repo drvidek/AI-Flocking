@@ -19,24 +19,22 @@ public class FlockAgent : CombatAgent
     [SerializeField] private AudioSource _hitSound;
 
 
-    new void Start()
+    public void Initialise(Flock flock)
     {
         base.Start();
         _agentCollider = GetComponent<Collider2D>();
-    }
-
-    public void Initialise(Flock flock)
-    {
         _agentFlock = flock;
+        _agentCollider.enabled = true;
+        hasSpawned = false;
     }
 
     public void Move(Vector2 velocity)
     {
         _pointDir.Add(velocity.normalized);
         if (_pointDir.Count > 10)
-        _pointDir.RemoveAt(0);
+            _pointDir.RemoveAt(0);
         Vector2 _pointDirAverage = new Vector2();
-        foreach(Vector2 item in _pointDir)
+        foreach (Vector2 item in _pointDir)
         {
             _pointDirAverage += item;
         }
@@ -57,15 +55,13 @@ public class FlockAgent : CombatAgent
         base.TakeDamage(hit);
     }
 
-    protected override IEnumerator EndOfLife()
+    protected override void EndOfLife()
     {
-        _agentFlock.agents.Remove(this);
-
         CreateDeathParticles();
-
+        _agentFlock.agents.Remove(this);
         GlobalScore.IncreaseScore(100 * (int)_healthMax, (Vector2)transform.position);
         GlobalScore.IncreaseComboMeter(1);
-        Destroy(this.gameObject);
-        yield return null;
+        _spriteRenderer.color = _homeCol;
+        AgentFlock.agentPool.Release(this);
     }
 }

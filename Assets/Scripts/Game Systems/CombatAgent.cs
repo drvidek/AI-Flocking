@@ -25,22 +25,26 @@ public abstract class CombatAgent : MonoBehaviour
     virtual protected void Start()
     {
         //on first create, fill health
-        if (_health == 0)
-        _health = _healthMax;
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _homeCol = _spriteRenderer.color;
+        if (_health <= 0)
+            _health = _healthMax;
+        if (_spriteRenderer == null)
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _homeCol = _spriteRenderer.color;
+        }
     }
 
-    protected abstract IEnumerator EndOfLife();
+    protected abstract void EndOfLife();
 
     virtual public void TakeDamage(float hit)
     {
         if (_spriteRenderer.isVisible)
-        _health -= hit;
+            _health -= hit;
         if (_health <= 0)
         {
-            StartCoroutine(EndOfLife());
+            EndOfLife();
         }
+        else
             StartCoroutine(HitEffect());
     }
 
@@ -81,7 +85,7 @@ public abstract class CombatAgent : MonoBehaviour
         transform.position = newPosition;
     }
 
-    IEnumerator HitEffect()
+    protected IEnumerator HitEffect()
     {
         _spriteRenderer.color = _hitEffectCol;
         yield return new WaitForSecondsRealtime(0.05f);
