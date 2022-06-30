@@ -10194,6 +10194,7 @@ MonoBehaviour:
   _comboBar: {fileID: 1276080972}
   _comboUpSFX: {fileID: 1246541710}
   _comboBreakSFX: {fileID: 961866636}
+  _scorePopup: {fileID: 5562484642565501295, guid: 449ab6f489017d147aeedf87a8619a01, type: 3}
 --- !u!1 &1156505730
 GameObject:
   m_ObjectHideFlags: 0
@@ -12100,7 +12101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.69854313}
-  m_AnchoredPosition: {x: -249.3, y: 0.23800659}
+  m_AnchoredPosition: {x: -249.29999, y: 0.23803711}
   m_SizeDelta: {x: -498.6, y: 0.475}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1430936161

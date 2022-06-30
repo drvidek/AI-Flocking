@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour
@@ -22,11 +23,34 @@ public class ScoreKeeper : MonoBehaviour
     [SerializeField] private AudioSource _comboUpSFX;
     [SerializeField] private AudioSource _comboBreakSFX;
 
+    [SerializeField] private GameObject _scorePopup;
+    private ObjectPool<ScorePopup> _popupPool;
+    public ObjectPool<ScorePopup> PopupPool { get { return _popupPool; } }
+    private List<ScorePopup> _popupsInUse = new List<ScorePopup>();
+
     public static string scorePopupPath = "Prefabs/Score Popup";
 
 
     private void Start()
     {
+        _popupPool = new ObjectPool<ScorePopup>(() =>
+        {
+            return Instantiate(_scorePopup).GetComponent<ScorePopup>();
+        }, popup =>
+        {
+            popup.gameObject.SetActive(true);
+            _popupsInUse.Add(popup);
+        }, popup =>
+        {
+            _popupsInUse.Remove(popup);
+            popup.gameObject.SetActive(false);
+        },
+       popup =>
+       {
+           Destroy(popup.gameObject);
+       }, false, 20
+           );
+
         UpdateScoreText();
         UpdateComboBar();
         _comboTextAnim = _comboText.GetComponent<Animator>();
@@ -46,10 +70,16 @@ public class ScoreKeeper : MonoBehaviour
 
         if (Settings.showScorePopup)
         {
-            GameObject popupPrefab = Resources.Load(scorePopupPath) as GameObject;
-            ScorePopup _popup = Instantiate(popupPrefab, new Vector3(position.x, position.y, -2), new Quaternion(0, 0, 0, 0)).GetComponent<ScorePopup>();
-            _popup.Points = _pointWorth.ToString();
+            InitialisePopup(_pointWorth, position);
         }
+    }
+
+    void InitialisePopup(float points, Vector2 position)
+    {
+        ScorePopup _popup = _popupPool.Get();
+        _popup.transform.position = new Vector3(position.x, position.y, -5);
+        _popup.Points = points.ToString();
+        _popup.Initialize(this);
     }
 
     public void IncreaseComboMeter(float amount)
