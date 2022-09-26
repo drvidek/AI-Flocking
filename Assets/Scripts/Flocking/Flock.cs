@@ -10,9 +10,9 @@ public class Flock : MonoBehaviour
     public ObjectPool<FlockAgent> agentPool;
     public FlockBehaviour behavior;
 
-    [Range(1, 500)]
-    public int spawnCount = 250;
-    public int spawnMax = 50;
+    public int spawnCountInit;
+    public int spawnCountCurrent;
+    public int spawnMax;
     public float agentDensity = 0.08f;
 
     [Range(1f, 100f)]
@@ -41,8 +41,6 @@ public class Flock : MonoBehaviour
 
     private void Start()
     {
-        int i = GetSpawnLocation(false);
-
         agentPool = new ObjectPool<FlockAgent>(() =>
             {
                 return Instantiate(agentPrefab, agentPoolLoc.position, Quaternion.Euler(Vector3.forward * Random.Range(0, 360f)), transform).GetComponent<FlockAgent>();
@@ -61,7 +59,15 @@ public class Flock : MonoBehaviour
                  Destroy(newAgent.gameObject);
              }, false, spawnMax
             );
-        SpawnAgents(i, spawnCount);
+        Initialise();
+    }
+
+    public void Initialise()
+    {
+        ClearAgents();
+        int i = GetSpawnLocation(false);
+        spawnCountCurrent = spawnCountInit;
+        SpawnAgents(i, spawnCountCurrent);
     }
 
     void SpawnAgents(int index, int count)
@@ -70,11 +76,10 @@ public class Flock : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             FlockAgent newAgent = agentPool.Get();
-            newAgent.transform.position = _spawnpoint.position + (Vector3)(Random.insideUnitCircle * spawnCount * agentDensity);
+            newAgent.transform.position = _spawnpoint.position + (Vector3)(Random.insideUnitCircle * spawnCountCurrent * agentDensity);
             newAgent.AgentCollider.enabled = true;
         }
     }
-
 
     int GetSpawnLocation(bool random)
     {
@@ -92,9 +97,9 @@ public class Flock : MonoBehaviour
         {
             if (agents.Count == 0)
             {
-                spawnCount = Mathf.Min((int)Mathf.Round((float)spawnCount * spawnIncrease), spawnMax);
+                spawnCountCurrent = Mathf.Min((int)Mathf.Round((float)spawnCountCurrent * spawnIncrease), spawnMax);
                 int i = GetSpawnLocation(true);
-                SpawnAgents(i, spawnCount);
+                SpawnAgents(i, spawnCountCurrent);
                 Animator animator = _warningIcons[i].GetComponentInChildren<Animator>();
                 animator.SetTrigger("Flash");
             }
@@ -184,7 +189,7 @@ public class Flock : MonoBehaviour
     {
         foreach (FlockAgent agent in agents)
         {
-            Destroy(agent.gameObject);
+            agentPool.Release(agent);
         }
 
         agents.Clear();

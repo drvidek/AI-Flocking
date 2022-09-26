@@ -107,6 +107,7 @@ public class ScoreKeeper : MonoBehaviour
     public void ResetScore()
     {
         _score = 0;
+        UpdateScoreText();
     }
 
     public void ResetCombo()

@@ -5253,7 +5253,8 @@ MonoBehaviour:
   agentPrefab: {fileID: 2153957486420380767, guid: 52051548e922c814b94bfe8ec6f952cb, type: 3}
   agents: []
   behavior: {fileID: 11400000, guid: b760a30a17d147643afb368c1c7049c4, type: 2}
-  spawnCount: 15
+  spawnCountInit: 15
+  spawnCountCurrent: 0
   spawnMax: 35
   agentDensity: 0.08
   driveFactor: 10
@@ -6423,7 +6424,8 @@ MonoBehaviour:
   agentPrefab: {fileID: 2153957486420380767, guid: e201addef1c6a1944924aeb4b05532bd, type: 3}
   agents: []
   behavior: {fileID: 11400000, guid: 0b923045cb3902347bfc1d05fe1dac4d, type: 2}
-  spawnCount: 3
+  spawnCountInit: 3
+  spawnCountCurrent: 0
   spawnMax: 15
   agentDensity: 0.08
   driveFactor: 10
@@ -7035,6 +7037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -8915,7 +8918,8 @@ MonoBehaviour:
   agentPrefab: {fileID: 2153957486420380767, guid: 987d218ad32ad1545936b0fd112ff501, type: 3}
   agents: []
   behavior: {fileID: 11400000, guid: c793e1f7a6cec0149a62d3cc155111ac, type: 2}
-  spawnCount: 4
+  spawnCountInit: 4
+  spawnCountCurrent: 0
   spawnMax: 18
   agentDensity: 0.08
   driveFactor: 23.5
@@ -10144,6 +10148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d8ce7247f526c489def53e3f4c19b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flocks:
+  - {fileID: 889465174}
+  - {fileID: 110987659}
+  - {fileID: 280147874}
+  - {fileID: 1740852043}
   _pausePanel: {fileID: 1331041298}
   _endPanel: {fileID: 80597634}
   _highscoreInput: {fileID: 1431970023}
@@ -10152,11 +10161,6 @@ MonoBehaviour:
   _highscorePoints: {fileID: 112575953}
   _countdownText: {fileID: 659066594}
   _player: {fileID: 0}
-  flocks:
-  - {fileID: 889465174}
-  - {fileID: 110987659}
-  - {fileID: 280147874}
-  - {fileID: 1740852043}
 --- !u!114 &1138719311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14093,7 +14097,8 @@ MonoBehaviour:
   agentPrefab: {fileID: 2153957486420380767, guid: b27995c2fb6b5194e896a1126e6b4c46, type: 3}
   agents: []
   behavior: {fileID: 11400000, guid: 25049006923a125499f3d522a86e5ba4, type: 2}
-  spawnCount: 10
+  spawnCountInit: 10
+  spawnCountCurrent: 0
   spawnMax: 40
   agentDensity: 0.08
   driveFactor: 10

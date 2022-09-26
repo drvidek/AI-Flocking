@@ -45,6 +45,20 @@ public class PlayerMain : CombatAgent
         _boostPartDone = true;
     }
 
+    public void Initialise()
+    {
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        _spdCurrent = 0;
+        _spdAccelCurrent = 0;
+        _myVelocity = Vector2.zero;
+        _dead = false;
+        _boostPartDone = true;
+        _spriteRenderer.enabled = true;
+        _myCollider.enabled = true;
+        _health = _healthMax;
+    }
+
     // Update is called once per frame
     void Update()
     {

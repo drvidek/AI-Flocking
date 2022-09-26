@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] public static GameState currentGameState = GameState.game;
+    [SerializeField] private Flock[] flocks;
     [SerializeField] public GameObject _pausePanel;
     [SerializeField] public GameObject _endPanel;
     [SerializeField] public GameObject _highscoreInput;
@@ -108,8 +109,31 @@ public class GameManager : MonoBehaviour
     public void NewRound()
     {
         currentGameState = GameState.pregame;
+        _roundOver = false;
+        _endPanel.SetActive(false);
+        _pausePanel.SetActive(false);
+
+        foreach (Bullet bullet in bullets)
+        {
+            if (bullet != null)
+            Destroy(bullet.gameObject);
+        }
         bullets.Clear();
-        SceneManager.LoadScene(1);
+
+        foreach (Flock flock in flocks)
+        {
+            flock.Initialise();
+        }
+
+
+        _player.Initialise();
+
+        GlobalScore.ResetCombo();
+        GlobalScore.ResetScore();
+
+        StartCoroutine(Countdown());
+        
+        //SceneManager.LoadScene(1);
     }
 
     public void EndRound()
@@ -153,7 +177,6 @@ public class GameManager : MonoBehaviour
         SetHighScores();
     }
 
-    [SerializeField] private Flock[] flocks;
 
     #region Save + Load
     public void SaveGame(int file)
